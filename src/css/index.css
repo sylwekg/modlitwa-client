@@ -1,0 +1,46 @@
+/*\.navitems {
+	margin-right: 1rem;
+}*/
+
+.container {
+	padding-right: 12px; 
+    padding-left: 12px; 
+    padding-top: 144px;
+}
+
+.header {
+	padding-right: 6px; 
+    padding-left: 6px;
+}
+
+html {
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+	margin: 0px;
+/*  font-size: 13px;
+  line-height: 20px;*/
+}
+
+@media (min-width: 0) and (max-width: 768px) { 
+	.menu {
+		 
+	}
+
+	.tab {
+		visibility: visible;
+	}
+}
+
+@media (min-width: 769px) {
+	.menu {
+		height: 64px;
+		font-size: 24px;
+	
+	}
+	.tab {
+		visibility: hidden;
+		font-size: 14px;
+	}
+}
