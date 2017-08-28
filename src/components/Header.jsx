@@ -2,8 +2,8 @@ import React , { Component } from 'react';
 import {NavLink} from 'react-router-dom'
 
 
-import FlatButton from 'material-ui/FlatButton';
-import IconButton from 'material-ui/IconButton';
+// import FlatButton from 'material-ui/FlatButton';
+// import IconButton from 'material-ui/IconButton';
 import AppBar from 'material-ui/AppBar';
 import {Tabs, Tab} from 'material-ui/Tabs';
 //import FontIcon from 'material-ui/FontIcon';
@@ -25,16 +25,14 @@ var styles = {
     position: "fixed",
 
   },
-  login: {
-    
-  },
 };
 
+// value={this.props.id}
 
 class TabsMenu extends Component {
   render() {
     return(
-      <Tabs className={this.props.styl} value={this.props.id}>
+      <Tabs className={this.props.styl}  initialSelectedIndex={-1}>
         <Tab
           icon={<Face />}
           label="Profil"
@@ -64,8 +62,14 @@ class TabsMenu extends Component {
 class Header extends Component { 
   
   handleTouchTap = () => {
+    //this.forceUpdate();
     this.props.history.push("/");
+    
   }
+
+  // componentDidUpdate() {
+  //   this.setState({id: -1})
+  // }
 
   render() {
     return (

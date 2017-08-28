@@ -1,16 +1,26 @@
 /*\.navitems {
 	margin-right: 1rem;
 }*/
+
+/*login icon styling*/
 .right {
     float: right;
     height: 0px;
     padding-right: 15px;
 }
 
+.fb-button {
+	 max-width:200px;
+}
 
 .header {
 	padding-right: 6px; 
     padding-left: 6px;
+}
+
+.center {
+    text-align:center;
+    margin: auto;
 }
 
 html {
@@ -48,9 +58,9 @@ body {
 	}
 
 	.container {
-		padding-right: 12px; 
-	    padding-left: 12px; 
-	    padding-top: 144px;
+		padding-right: 0px; 
+	    padding-left: 0px; 
+	    padding-top: 140px;
 	}
 }
 
@@ -77,6 +87,8 @@ body {
 	.container {
 		padding-right: 12px; 
 	    padding-left: 12px; 
-	    padding-top: 70px;
+	    padding-top: 90px;
+	    max-width: 30rem;
+	    margin: auto;
 	}
 }

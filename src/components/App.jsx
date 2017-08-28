@@ -34,10 +34,10 @@ export default class App extends Component {
 	    	};
   	} 
 
-
+//muiTheme={getMuiTheme(darkBaseTheme)}
 	render() {
 		return (
-		<MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+		<MuiThemeProvider >
 			<BrowserRouter>	 
 			  	<div>
 				  	<Route path="/" component={Header} />
