@@ -14,7 +14,7 @@ class Home extends Component {
 
   render() {
     return (
-      <div className="main-content container">
+      <div className="container">
         <h2>Front End Course Directory</h2>
         <p>This fun directory is a project for the <em>React Router Basics</em> course on Treehouse.</p>
         <p>Learn front end web development and much more! This simple directory app offers a preview of our course library. Choose from many hours of content, from HTML to CSS to JavaScript. Learn to code and get the skills you need to launch a new career in front end web development.</p>

@@ -1,12 +1,12 @@
 /*\.navitems {
 	margin-right: 1rem;
 }*/
-
-.container {
-	padding-right: 12px; 
-    padding-left: 12px; 
-    padding-top: 144px;
+.right {
+    float: right;
+    height: 0px;
+    padding-right: 15px;
 }
+
 
 .header {
 	padding-right: 6px; 
@@ -24,23 +24,59 @@ body {
 }
 
 @media (min-width: 0) and (max-width: 768px) { 
+	.title {
+		font-size: 	18px !important;
+		cursor: pointer;
+	}
+
 	.menu {
+
 		 
 	}
 
 	.tab {
 		visibility: visible;
+		width: 100%;
+    	padding-left: 6px;
+    	padding-right: 6px;
+	}
+
+	.menuHD {
+		visibility: hidden;
+		width: 0px;
+		height: 0px;
+	}
+
+	.container {
+		padding-right: 12px; 
+	    padding-left: 12px; 
+	    padding-top: 144px;
 	}
 }
 
 @media (min-width: 769px) {
+	.title {
+		cursor: pointer;
+	}
 	.menu {
-		height: 64px;
+		height: 74px;
 		font-size: 24px;
+		float: right !important;
 	
 	}
 	.tab {
 		visibility: hidden;
 		font-size: 14px;
+		float: right !important;
+	}
+	.menuHD {
+		visibility: visible;
+		width: 20rem;
+	}
+
+	.container {
+		padding-right: 12px; 
+	    padding-left: 12px; 
+	    padding-top: 70px;
 	}
 }

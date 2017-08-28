@@ -2,7 +2,7 @@ import React from 'react';
 
 
 const Modlitwa = () => (
-  <div className="main-content container">
+  <div className="container">
     <h2>Modlitwa </h2>
     <p>Modlitwa Modlitwa Modlitwa  Modlitwa  Modlitwa  Modlitwa  Modlitwa  Modlitwa </p>
 
