@@ -15,7 +15,6 @@ export default class Login extends Component {
 	    	passwordErrorText: '',
 	    	email: '',
 	    	password: '', 
-	    	formNotComplete: '',
 	    }
     }
 
@@ -87,13 +86,12 @@ export default class Login extends Component {
 			      <RaisedButton 
 			      	label="Submit" 
 			      	onClick={this.submit.bind(this)}
-			      	disabled={this.state.formNotComplete}
 			      	primary={true}  
 			      	fullWidth={true} 
 			      	/>
     			</CardActions>
 				<br />
-    			<a href="/">	<img src="images/fbLoginButton.png" className="fb-button"  /></a>
+    			<a href="/">	<img src="images/fbLoginButton.png" className="fb-button" alt="fb-button" /></a>
     			<CardText> Not registered yet, Register now</CardText>
     			<CardActions>
 			      <RaisedButton 
@@ -103,6 +101,7 @@ export default class Login extends Component {
 			      	fullWidth={true} 
 			      	/>
     			</CardActions>
+    			<br />
 			</Card>
 		  </div>
 		);
