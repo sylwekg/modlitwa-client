@@ -25,6 +25,20 @@ import Login from './Login';
 
 const HeaderWithRouter = withRouter(Header);
 
+
+// const PrivateRoute = ({ component: Component, ...rest }) => (
+//   <Route {...rest} render={props => (
+//     fakeAuth.isAuthenticated ? (
+//       <Component {...props}/>
+//     ) : (
+//       <Redirect to={{
+//         pathname: '/login',
+//         state: { from: props.location }
+//       }}/>
+//     )
+//   )}/>
+// )
+
 export default class App extends Component {
 
 	constructor() {
@@ -63,20 +77,31 @@ export default class App extends Component {
 
 //muiTheme={getMuiTheme(darkBaseTheme)}
 	render() {
+		const { isAuthorized } = this.state
+
 		return (
 		<MuiThemeProvider >
 			<BrowserRouter>	 
 			  	<div>
-				  	<Route path="/" render={ () => <HeaderWithRouter isAuthorized={this.state.isAuthorized} onLogout={this.onLogout} /> } />
+				  	<Route path="/" render={ () => <HeaderWithRouter 
+				  		isAuthorized={this.state.isAuthorized} 
+				  		onLogout={this.onLogout} /> 
+				  	}  />
 				  	
 				  	<Switch>
 					  	<Route exact path="/" render={ () => <Home  /> }/>
 
-					  	<Route path="/grupa" component={Grupa} />
-					  	<Route path="/modlitwa" component={Modlitwa} />
-					  	<Route path="/stats" component={Stats} />
-					  	<Route path="/profil" component={Profil} />
-					  	<Route path="/wiadomosci" component={Wiadomosci} />
+					  	<Route path="/grupa" render= { () => (isAuthorized) ? ( <Grupa /> ) : 
+					  		(<Login onLogin={this.loginUser} onLoading={this.onLoading}/>) } />
+
+					  	<Route path="/modlitwa" render= { () => isAuthorized ? <Modlitwa /> : 
+					  		<Login onLogin={this.loginUser} onLoading={this.onLoading}/>}  />
+					  	<Route path="/stats" render= { () => isAuthorized ? <Stats /> : 
+					  		<Login onLogin={this.loginUser} onLoading={this.onLoading}/>}  />
+					  	<Route path="/profil" render= { () => isAuthorized ? <Profil /> : 
+					  		<Login onLogin={this.loginUser} onLoading={this.onLoading}/>}  />
+					  	<Route path="/wiadomosci" render= { () => isAuthorized ? <Wiadomosci /> : 
+					  		<Login onLogin={this.loginUser} onLoading={this.onLoading}/>}  />
 					  	<Route path="/login" render={ () => <Login  onLogin={this.loginUser} onLoading={this.onLoading}/> }  />
 					  	<Route path="/about" render={ () => <About title="about ..."/> } />  
 

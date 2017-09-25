@@ -23,7 +23,6 @@ var styles = {
     paddingLeft: '10px',
     paddingRight: '10px',
     position: "fixed",
-
   },
 };
 
