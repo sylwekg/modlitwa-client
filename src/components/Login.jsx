@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
+import { Redirect } from 'react-router-dom';
 import TextField from 'material-ui/TextField';
 import {Card, CardTitle, CardActions, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';;
 
 export default class Login extends Component {
 	static propTypes: {
-	    login: React.PropTypes.func.isRequired,
+	    onLogin: React.PropTypes.func.isRequired,
+	    onLoading: React.PropTypes.func.isRequired,
 	};
 
     constructor(props) {
@@ -15,7 +17,16 @@ export default class Login extends Component {
 	    	passwordErrorText: '',
 	    	email: '',
 	    	password: '', 
+	    	redirectToReferrer: false,
 	    }
+    }
+
+    componentWillMount() {
+    	this.props.onLoading(true);
+    }
+
+    componentWillUnmount() {
+    	this.props.onLoading(false);
     }
 
   	onChangeEmail(event) {
@@ -40,7 +51,7 @@ export default class Login extends Component {
  		} 		
  	}
 
- 	submit(event) {
+ 	submit(event){
  		//fields verification
 		if (this.state.email.match(/@/)) {
 	      this.setState({ emailErrorText: '' });
@@ -55,12 +66,30 @@ export default class Login extends Component {
 	    }
 
 	    if(this.state.password.length > 3 && this.state.email.match(/@/)){
-	    	alert('wysylam dane...');
-	    	this.props.login(this.state.email, this.state.password);
+	    	//alert('wysylam dane...');
+	    	// fetch data - display progress circle
+
+	    	// if error 
+	    		// stay on login, display error 
+
+	    	// if ok
+	    		// send data, redirect to profile page
+	    	this.props.onLogin({}, this.state.email);
+			this.setState({ redirectToReferrer: true });
 	    }
  	}
 
+
 	render() {
+	    //const { from } = this.props.location.state || { from: { pathname: '/' } }
+	    const { redirectToReferrer } = this.state
+	    
+	    if (redirectToReferrer) {
+	      return (
+	        <Redirect to='/'/>
+	      )
+	    }
+
 		return (
 		  <div className="container">
 		    <Card className="center">

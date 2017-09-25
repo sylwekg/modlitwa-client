@@ -1,6 +1,6 @@
 import React , { Component } from 'react';
-import {NavLink} from 'react-router-dom'
-
+import {NavLink} from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 // import FlatButton from 'material-ui/FlatButton';
 // import IconButton from 'material-ui/IconButton';
@@ -27,7 +27,6 @@ var styles = {
   },
 };
 
-// value={this.props.id}
 
 class TabsMenu extends Component {
   render() {
@@ -60,18 +59,28 @@ class TabsMenu extends Component {
 
 
 class Header extends Component { 
+  static propTypes: {
+      isAuthorized: PropTypes.bool.isRequired,
+      onLogout: PropTypes.func.isRequired,
+      history: PropTypes.object.isRequired,
+  };
   
   handleTouchTap = () => {
     //this.forceUpdate();
     this.props.history.push("/");
     
-  }
+  };
 
-  // componentDidUpdate() {
-  //   this.setState({id: -1})
-  // }
+  handleLogout = () => {
+    this.props.onLogout();
+    this.props.history.push("/");
+  };
+
+
 
   render() {
+    const { isAuthorized } = this.props
+
     return (
       <header>
         <MediaQuery query='(min-width: 769px)'>
@@ -84,13 +93,29 @@ class Header extends Component {
             //iconElementRight={<IconButton tooltip="Login"> <Person /> </IconButton>}
             className="menu"
             >
-            <TabsMenu styl="menuHD"  />
+
+            {isAuthorized &&
+              <TabsMenu styl="menuHD"  />
+            }
+
             <div className="right">
-              <Tab 
-                icon={<Person />}
-                label="Login"
-                containerElement={<NavLink to="/login" />}
-                />
+              {!isAuthorized &&
+                <Tab 
+                  icon={<Person />}
+                  label="Login"
+                  containerElement={<NavLink to="/login" />}
+                  />
+              }
+
+              {isAuthorized &&
+                <div onClick={this.handleLogout}>
+                  <Tab 
+                    icon={<Person />}
+                    label="Logout"
+                    />
+                </div>
+              }
+
             </div>
           </AppBar> 
         </MediaQuery>
@@ -103,16 +128,30 @@ class Header extends Component {
             onTitleTouchTap={this.handleTouchTap}
             iconElementRight={
               <div className="right">
-                <Tab 
-                  icon={<Person />}
-                  //label="Login"
-                  containerElement={<NavLink to="/login" />}
-                  />
+                {!isAuthorized &&
+                  <Tab 
+                    icon={<Person />}
+                    label="Login"
+                    containerElement={<NavLink to="/login" />}
+                    />
+                }
+                {isAuthorized &&
+                <div onClick={this.handleLogout}>
+                  <Tab 
+                    icon={<Person />}
+                    label="Logout"
+                    />
+                </div>
+              }
+
+
               </div>}
             //iconElementRight={<IconButton tooltip="Login"> <Person /> </IconButton>}
             className="menu"
             >
-            <TabsMenu styl="tab"  />
+            {isAuthorized &&
+              <TabsMenu styl="tab"  />
+            }
           </AppBar> 
         </MediaQuery>
 
