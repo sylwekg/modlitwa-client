@@ -1,3 +1,5 @@
+import {getProfile} from '../authorize';
+
 import React, { Component } from 'react';
 import {
 	BrowserRouter,
@@ -29,20 +31,6 @@ import PrivateRoute from './Privateroute';
 
 const HeaderWithRouter = withRouter(Header);
 
-
-// const PrivateRoute = ({ component: Component, isAuthorized,  ...rest }) => (
-//   <Route {...rest} render={props => (
-//     isAuthorized ? (
-//       <Component {...props}/>
-//     ) : (
-//       <Redirect to={{
-//         pathname: '/login',
-//         state: { from: props.location }
-//       }}/>
-//     )
-//   )}/>
-// )
-
 export default class App extends Component {
 
 	constructor() {
@@ -55,6 +43,21 @@ export default class App extends Component {
 	    	};
   	};
 
+  	componentWillMount() {
+  		let token = localStorage.getItem('id_token') || '';
+  		let userId = localStorage.getItem('userId') || '';
+  		if(token && userId) {
+  			getProfile(userId, token)
+  				.then(user => {
+  					this.loginUser(user.user, user.access_token);
+  				})
+  				.catch(err => {
+  					console.log(err);
+  					this.onLogout();
+  				});
+  		} 
+    };
+
   	loginUser = (user, token) => {
   		  this.setState({
           	access_token: token,
@@ -65,18 +68,18 @@ export default class App extends Component {
   	};
 
   	onLoading = (loading) => {
-  		//this.state.loading=loading;
   		this.setState({ loading: loading });
   	};
 
   	onLogout = () => {
-  		//this.state.history.push('/');
   		this.setState({
 	    	access_token :"",
 	      	user:{},
 	      	loading: false,
 	      	isAuthorized: false,
   		});
+  		localStorage.removeItem('id_token');
+  		localStorage.removeItem('userId');
   	}
 
 //muiTheme={getMuiTheme(darkBaseTheme)}

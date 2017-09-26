@@ -1,3 +1,5 @@
+import {login} from '../authorize';
+
 import React, {Component} from 'react';
 import { Redirect } from 'react-router-dom';
 import TextField from 'material-ui/TextField';
@@ -31,6 +33,7 @@ export default class Login extends Component {
     }
 
   	onChangeEmail(event) {
+  		this.setState({errorMessage:''});
   		this.setState({email:event.target.value})
   		if(this.state.emailErrorText) {
   			if (event.target.value.match(/@/)) {
@@ -42,6 +45,7 @@ export default class Login extends Component {
  	}
 
   	onChangePassword(event) {
+  		this.setState({errorMessage:''});
   		this.setState({password:event.target.value})
  		if(this.state.passwordErrorText){
  			if (event.target.value.length > 3) {
@@ -67,22 +71,22 @@ export default class Login extends Component {
 	    }
 
 	    if(this.state.password.length > 3 && this.state.email.match(/@/)){
-	    	//alert('wysylam dane...');
 	    	// fetch data - display progress circle
-
-	    	// if error 
-	    		// stay on login, display error 
-
-	    	// if ok
-	    		// send data, redirect to profile page
-	    	this.props.onLogin({}, this.state.email);
-			this.setState({ redirectToReferrer: true });
+	    	login(this.state.email,this.state.password)
+	    	.then( user => {
+	    		  localStorage.setItem('id_token', user.access_token);
+	    		  localStorage.setItem('userId', user.user._id);
+			      this.props.onLogin(user.user, user.access_token);
+				  this.setState({ redirectToReferrer: true });
+	    	})
+	    	.catch( err => {
+	    		console.log('component:',err);
+	    		this.setState({errorMessage:err.message});
+	    	});
 	    }
  	}
 
-
 	render() {
-	    //const { from } = this.props.location.state || { from: { pathname: '/' } }
 	    const { redirectToReferrer, errorMessage } = this.state
 	    
 	    if (redirectToReferrer) {
@@ -97,11 +101,9 @@ export default class Login extends Component {
 		    	<CardTitle title="Login"  />
 		    	{errorMessage.length>0 &&
 		    	<div className="errorMessage">
-		    		<p> errorMessage </p>
+		    		<p> {errorMessage} </p>
 		    	</div>
 		    	}
-
-
 			    <TextField
 			      id="email"
 			      name="email"
