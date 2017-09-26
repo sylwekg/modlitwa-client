@@ -1,5 +1,4 @@
 import {getProfile} from '../authorize';
-
 import React, { Component } from 'react';
 import {
 	BrowserRouter,
@@ -18,21 +17,18 @@ import Header from './Header';
 import About from './About';
 import Home from './Home';
 import NotFound from './NotFound';
-
 import Grupa from './Grupa';
 import Modlitwa from './Modlitwa';
 import Profil from './Profil';
 //import Stats from './Stats';
 import Wiadomosci from './Wiadomosci';
 import Login from './Login';
-
 import PrivateRoute from './Privateroute';
 
-
 const HeaderWithRouter = withRouter(Header);
+const LoginWR = withRouter(Login);
 
 export default class App extends Component {
-
 	constructor() {
 	    super();
 	    this.state = {
@@ -49,13 +45,16 @@ export default class App extends Component {
   		if(token && userId) {
   			getProfile(userId, token)
   				.then(user => {
-  					this.loginUser(user.user, user.access_token);
+  					this.loginUser(user.user, token);
+  					console.log('user data received:',user);
+  					//this.props.history.push('/');
   				})
   				.catch(err => {
   					console.log(err);
   					this.onLogout();
   				});
   		} 
+  		console.log('componentWillMount');
     };
 
   	loginUser = (user, token) => {
@@ -91,7 +90,7 @@ export default class App extends Component {
 			<BrowserRouter>	 
 			  	<div>
 				  	<Route path="/" render={ () => <HeaderWithRouter 
-				  		isAuthorized={this.state.isAuthorized} 
+				  		isAuthorized={isAuthorized} 
 				  		onLogout={this.onLogout} /> 
 				  	}  />
 				  	
@@ -105,7 +104,8 @@ export default class App extends Component {
 					  	<PrivateRoute path="/profil" isAuthorized={isAuthorized} component={ () => <Profil /> }/>
 					  	<PrivateRoute path="/wiadomosci" isAuthorized={isAuthorized} component={ () => <Wiadomosci /> }/>
 
-					  	<Route path="/login" render={ () => <Login  onLogin={this.loginUser} onLoading={this.onLoading}/> }  />
+					  	<Route path="/login" render={ () => <LoginWR  
+					  		isAuthorized={isAuthorized} onLogin={this.loginUser} onLoading={this.onLoading}/> }  />
 					  	<Route path="/about" render={ () => <About title="about ..."/> } />  
 
 					  	<Route component={NotFound} />

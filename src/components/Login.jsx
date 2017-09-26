@@ -10,6 +10,8 @@ export default class Login extends Component {
 	static propTypes: {
 	    onLogin: React.PropTypes.func.isRequired,
 	    onLoading: React.PropTypes.func.isRequired,
+	    history: PropTypes.object.isRequired,
+	    isAuthorized: PropTypes.bool.isRequired,
 	};
 
     constructor(props) {
@@ -20,6 +22,7 @@ export default class Login extends Component {
 	    	email: '',
 	    	password: '', 
 	    	redirectToReferrer: false,
+	    	redirectPath: this.props.history.location.state ? this.props.history.location.state.from.pathname : '/',
 	    	errorMessage: '',
 	    }
     }
@@ -87,11 +90,12 @@ export default class Login extends Component {
  	}
 
 	render() {
-	    const { redirectToReferrer, errorMessage } = this.state
-	    
-	    if (redirectToReferrer) {
+	    const { redirectToReferrer, errorMessage, redirectPath } = this.state
+	    console.log('login render');
+
+	    if (redirectToReferrer || this.props.isAuthorized) { //
 	      return (
-	        <Redirect to='/'/>
+	        <Redirect to={redirectPath}/>
 	      )
 	    }
 

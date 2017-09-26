@@ -4,7 +4,6 @@ import {
   Redirect
 } from 'react-router-dom';
 
-
 const PrivateRoute = ({ component: Component, isAuthorized,  ...rest }) => (
   <Route {...rest} render={props => (
     isAuthorized ? (
@@ -17,6 +16,5 @@ const PrivateRoute = ({ component: Component, isAuthorized,  ...rest }) => (
     )
   )}/>
 )
-
 
 export default PrivateRoute;
