@@ -4,7 +4,7 @@ import {
 	Route,
 	Switch,
 	withRouter,
-	Redirect
+//	Redirect
 } from 'react-router-dom';
 //import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -20,25 +20,28 @@ import NotFound from './NotFound';
 import Grupa from './Grupa';
 import Modlitwa from './Modlitwa';
 import Profil from './Profil';
-import Stats from './Stats';
+//import Stats from './Stats';
 import Wiadomosci from './Wiadomosci';
 import Login from './Login';
+
+import PrivateRoute from './Privateroute';
+
 
 const HeaderWithRouter = withRouter(Header);
 
 
-const PrivateRoute = ({ component: Component, isAuthorized,  ...rest }) => (
-  <Route {...rest} render={props => (
-    isAuthorized ? (
-      <Component {...props}/>
-    ) : (
-      <Redirect to={{
-        pathname: '/login',
-        state: { from: props.location }
-      }}/>
-    )
-  )}/>
-)
+// const PrivateRoute = ({ component: Component, isAuthorized,  ...rest }) => (
+//   <Route {...rest} render={props => (
+//     isAuthorized ? (
+//       <Component {...props}/>
+//     ) : (
+//       <Redirect to={{
+//         pathname: '/login',
+//         state: { from: props.location }
+//       }}/>
+//     )
+//   )}/>
+// )
 
 export default class App extends Component {
 
@@ -95,8 +98,7 @@ export default class App extends Component {
 					  	<PrivateRoute path="/grupa" isAuthorized={isAuthorized} component={ () => <Grupa /> }/>
 {/*					  	<Route path="/grupa" render= { () => (isAuthorized) ? ( <Grupa /> ) : 
 					  		(<Login onLogin={this.loginUser} onLoading={this.onLoading}/>) } />       */}
-					  	<PrivateRoute path="/grupa" isAuthorized={isAuthorized} component={ () => <Modlitwa /> }/>
-					  	<PrivateRoute path="/modlitwa" isAuthorized={isAuthorized} component={ () => <Stats /> }/>
+					  	<PrivateRoute path="/modlitwa" isAuthorized={isAuthorized} component={ () => <Modlitwa /> }/>
 					  	<PrivateRoute path="/profil" isAuthorized={isAuthorized} component={ () => <Profil /> }/>
 					  	<PrivateRoute path="/wiadomosci" isAuthorized={isAuthorized} component={ () => <Wiadomosci /> }/>
 
