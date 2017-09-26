@@ -1,4 +1,4 @@
-
+const baseURL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
 
 export function login(email, password) {
 	let config = {
@@ -7,7 +7,7 @@ export function login(email, password) {
 	    body: `username=${email}&password=${password}`
 	}	
 	return new Promise((resolve, reject) => {
-		fetch('http://localhost:3001/api/sessions/create', config)
+		fetch(baseURL+'/api/sessions/create', config)
 		  .then(response =>
 		    response.json()
 		    .then(user => ({ user, response }))
@@ -33,7 +33,7 @@ export function getProfile(userId, token) {
 			'Authorization': 'Bearer '+token
 		},
 	};
-	let path = 'http://localhost:3001/api/protected/users/'+userId;
+	let path = baseURL+'/api/protected/users/'+userId;
 
 	return new Promise((resolve, reject) => {
 		fetch(path, config)

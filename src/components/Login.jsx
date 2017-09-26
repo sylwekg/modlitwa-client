@@ -21,7 +21,6 @@ export default class Login extends Component {
 	    	passwordErrorText: '',
 	    	email: '',
 	    	password: '', 
-	    	redirectToReferrer: false,
 	    	redirectPath: this.props.history.location.state ? this.props.history.location.state.from.pathname : '/',
 	    	errorMessage: '',
 	    }
@@ -80,7 +79,6 @@ export default class Login extends Component {
 	    		  localStorage.setItem('id_token', user.access_token);
 	    		  localStorage.setItem('userId', user.user._id);
 			      this.props.onLogin(user.user, user.access_token);
-				  this.setState({ redirectToReferrer: true });
 	    	})
 	    	.catch( err => {
 	    		console.log('component:',err);
@@ -90,10 +88,10 @@ export default class Login extends Component {
  	}
 
 	render() {
-	    const { redirectToReferrer, errorMessage, redirectPath } = this.state
+	    const { errorMessage, redirectPath } = this.state
 	    console.log('login render');
 
-	    if (redirectToReferrer || this.props.isAuthorized) { //
+	    if ( this.props.isAuthorized) {
 	      return (
 	        <Redirect to={redirectPath}/>
 	      )
@@ -135,7 +133,7 @@ export default class Login extends Component {
     			</CardActions>
 				<br />
     			<a href="/">	<img src="images/fbLoginButton.png" className="fb-button" alt="fb-button" /></a>
-    			<CardText> Not registered yet, Register now</CardText>
+    			<CardText> Not registered yet? Register now</CardText>
     			<CardActions>
 			      <RaisedButton 
 			      	href="/" 
