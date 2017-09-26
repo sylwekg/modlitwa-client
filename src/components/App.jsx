@@ -3,7 +3,8 @@ import {
 	BrowserRouter,
 	Route,
 	Switch,
-	withRouter
+	withRouter,
+	Redirect
 } from 'react-router-dom';
 //import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -26,18 +27,18 @@ import Login from './Login';
 const HeaderWithRouter = withRouter(Header);
 
 
-// const PrivateRoute = ({ component: Component, ...rest }) => (
-//   <Route {...rest} render={props => (
-//     fakeAuth.isAuthenticated ? (
-//       <Component {...props}/>
-//     ) : (
-//       <Redirect to={{
-//         pathname: '/login',
-//         state: { from: props.location }
-//       }}/>
-//     )
-//   )}/>
-// )
+const PrivateRoute = ({ component: Component, isAuthorized,  ...rest }) => (
+  <Route {...rest} render={props => (
+    isAuthorized ? (
+      <Component {...props}/>
+    ) : (
+      <Redirect to={{
+        pathname: '/login',
+        state: { from: props.location }
+      }}/>
+    )
+  )}/>
+)
 
 export default class App extends Component {
 
@@ -91,16 +92,14 @@ export default class App extends Component {
 				  	<Switch>
 					  	<Route exact path="/" render={ () => <Home  /> }/>
 
-					  	<Route path="/grupa" render= { () => (isAuthorized) ? ( <Grupa /> ) : 
-					  		(<Login onLogin={this.loginUser} onLoading={this.onLoading}/>) } />
-					  	<Route path="/modlitwa" render= { () => isAuthorized ? <Modlitwa /> : 
-					  		<Login onLogin={this.loginUser} onLoading={this.onLoading}/>}  />
-					  	<Route path="/stats" render= { () => isAuthorized ? <Stats /> : 
-					  		<Login onLogin={this.loginUser} onLoading={this.onLoading}/>}  />
-					  	<Route path="/profil" render= { () => isAuthorized ? <Profil /> : 
-					  		<Login onLogin={this.loginUser} onLoading={this.onLoading}/>}  />
-					  	<Route path="/wiadomosci" render= { () => isAuthorized ? <Wiadomosci /> : 
-					  		<Login onLogin={this.loginUser} onLoading={this.onLoading}/>}  />
+					  	<PrivateRoute path="/grupa" isAuthorized={isAuthorized} component={ () => <Grupa /> }/>
+{/*					  	<Route path="/grupa" render= { () => (isAuthorized) ? ( <Grupa /> ) : 
+					  		(<Login onLogin={this.loginUser} onLoading={this.onLoading}/>) } />       */}
+					  	<PrivateRoute path="/grupa" isAuthorized={isAuthorized} component={ () => <Modlitwa /> }/>
+					  	<PrivateRoute path="/modlitwa" isAuthorized={isAuthorized} component={ () => <Stats /> }/>
+					  	<PrivateRoute path="/profil" isAuthorized={isAuthorized} component={ () => <Profil /> }/>
+					  	<PrivateRoute path="/wiadomosci" isAuthorized={isAuthorized} component={ () => <Wiadomosci /> }/>
+
 					  	<Route path="/login" render={ () => <Login  onLogin={this.loginUser} onLoading={this.onLoading}/> }  />
 					  	<Route path="/about" render={ () => <About title="about ..."/> } />  
 
