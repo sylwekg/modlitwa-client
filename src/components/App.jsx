@@ -93,7 +93,6 @@ export default class App extends Component {
 
 					  	<Route path="/grupa" render= { () => (isAuthorized) ? ( <Grupa /> ) : 
 					  		(<Login onLogin={this.loginUser} onLoading={this.onLoading}/>) } />
-
 					  	<Route path="/modlitwa" render= { () => isAuthorized ? <Modlitwa /> : 
 					  		<Login onLogin={this.loginUser} onLoading={this.onLoading}/>}  />
 					  	<Route path="/stats" render= { () => isAuthorized ? <Stats /> : 

@@ -54,6 +54,10 @@
     margin: auto;
 }
 
+.errorMessage {
+    padding: 1px;
+    background-color: crimson;	
+}
 
 html {
   font-family: 'Roboto', sans-serif;

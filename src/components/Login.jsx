@@ -18,6 +18,7 @@ export default class Login extends Component {
 	    	email: '',
 	    	password: '', 
 	    	redirectToReferrer: false,
+	    	errorMessage: '',
 	    }
     }
 
@@ -82,7 +83,7 @@ export default class Login extends Component {
 
 	render() {
 	    //const { from } = this.props.location.state || { from: { pathname: '/' } }
-	    const { redirectToReferrer } = this.state
+	    const { redirectToReferrer, errorMessage } = this.state
 	    
 	    if (redirectToReferrer) {
 	      return (
@@ -94,6 +95,13 @@ export default class Login extends Component {
 		  <div className="container">
 		    <Card className="center">
 		    	<CardTitle title="Login"  />
+		    	{errorMessage.length>0 &&
+		    	<div className="errorMessage">
+		    		<p> errorMessage </p>
+		    	</div>
+		    	}
+
+
 			    <TextField
 			      id="email"
 			      name="email"
