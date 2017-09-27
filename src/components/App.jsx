@@ -43,6 +43,7 @@ export default class App extends Component {
   		let token = localStorage.getItem('id_token') || '';
   		let userId = localStorage.getItem('userId') || '';
   		if(token && userId) {
+  			this.setState({loading:true});
   			getProfile(userId, token)
   				.then(user => {
   					this.loginUser(user.user, token);
@@ -83,7 +84,7 @@ export default class App extends Component {
 
 //muiTheme={getMuiTheme(darkBaseTheme)}
 	render() {
-		const { isAuthorized } = this.state
+		const { isAuthorized, loading } = this.state
 
 		return (
 		<MuiThemeProvider >
@@ -91,6 +92,7 @@ export default class App extends Component {
 			  	<div>
 				  	<Route path="/" render={ () => <HeaderWithRouter 
 				  		isAuthorized={isAuthorized} 
+				  		loading={loading}
 				  		onLogout={this.onLogout} /> 
 				  	}  />
 				  	

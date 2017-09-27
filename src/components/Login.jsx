@@ -26,14 +26,6 @@ export default class Login extends Component {
 	    }
     }
 
-    componentWillMount() {
-    	this.props.onLoading(true);
-    }
-
-    componentWillUnmount() {
-    	this.props.onLoading(false);
-    }
-
   	onChangeEmail(event) {
   		this.setState({errorMessage:''});
   		this.setState({email:event.target.value})
@@ -74,6 +66,7 @@ export default class Login extends Component {
 
 	    if(this.state.password.length > 3 && this.state.email.match(/@/)){
 	    	// fetch data - display progress circle
+	    	this.props.onLoading(true);
 	    	login(this.state.email,this.state.password)
 	    	.then( user => {
 	    		  localStorage.setItem('id_token', user.access_token);
@@ -83,6 +76,7 @@ export default class Login extends Component {
 	    	.catch( err => {
 	    		console.log('component:',err);
 	    		this.setState({errorMessage:err.message});
+	    		this.props.onLoading(false);
 	    	});
 	    }
  	}

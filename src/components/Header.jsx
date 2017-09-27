@@ -13,6 +13,7 @@ import Face from 'material-ui/svg-icons/action/face';
 import Message from 'material-ui/svg-icons/communication/message';
 import Person from 'material-ui/svg-icons/social/person';
 //import ActionHome from 'material-ui/svg-icons/action/home';
+import CircularProgress from 'material-ui/CircularProgress'
 
 var MediaQuery = require('react-responsive');
 
@@ -62,6 +63,7 @@ class Header extends Component {
       isAuthorized: PropTypes.bool.isRequired,
       onLogout: PropTypes.func.isRequired,
       history: PropTypes.object.isRequired,
+      loading: PropTypes.bool.isRequired,
   };
   
   handleTouchTap = () => {
@@ -78,10 +80,15 @@ class Header extends Component {
 
 
   render() {
-    const { isAuthorized } = this.props
+    const { isAuthorized, loading } = this.props
 
     return (
       <header>
+        {loading && 
+        <div className="progressIndicator">
+          <CircularProgress size={60} thickness={7} />
+        </div> }
+
         <MediaQuery query='(min-width: 769px)'>
           <AppBar 
             title={<span className="title">ModlitwaOnline.pl</span>} 
