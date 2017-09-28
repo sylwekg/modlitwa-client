@@ -52,3 +52,31 @@ export function getProfile(userId, token) {
 		}).catch(err => console.log("Login Error: ", err))
 	});
 }
+
+export function getEditProfileData(token) {
+	let config = {
+	    method: 'GET',
+	    headers: { 
+	    	'Content-Type':'application/x-www-form-urlencoded', 
+			'Authorization': 'Bearer '+token
+		},
+	};
+	let path = baseURL+'/api/protected/EditProfileData';
+
+	return new Promise((resolve, reject) => {
+		fetch(path, config)
+		  .then(response =>
+		    response.json()
+		    .then(data => ({ data, response }))
+		  ).then(({ data, response }) =>  {
+		    if (!response.ok) {
+		      // If there was a problem
+		      reject(data)
+		    }
+		    else {
+		      // If login was successful, set the token in local storage
+		      resolve(data)
+		    }
+		}).catch(err => console.log("Fetch data error: ", err))
+	});
+}

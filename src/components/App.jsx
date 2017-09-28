@@ -84,7 +84,7 @@ export default class App extends Component {
 
 //muiTheme={getMuiTheme(darkBaseTheme)}
 	render() {
-		const { isAuthorized, loading } = this.state
+		const { isAuthorized, loading, user } = this.state
 
 		return (
 		<MuiThemeProvider >
@@ -103,11 +103,15 @@ export default class App extends Component {
 {/*					  	<Route path="/grupa" render= { () => (isAuthorized) ? ( <Grupa /> ) : 
 					  		(<Login onLogin={this.loginUser} onLoading={this.onLoading}/>) } />       */}
 					  	<PrivateRoute path="/modlitwa" isAuthorized={isAuthorized} component={ () => <Modlitwa /> }/>
-					  	<PrivateRoute path="/profil" isAuthorized={isAuthorized} component={ () => <Profil /> }/>
+
+					  	<PrivateRoute path="/profil" isAuthorized={isAuthorized} 
+					  		component={ () => <Profil user={user} onLoading={this.onLoading}/> }/>
+
 					  	<PrivateRoute path="/wiadomosci" isAuthorized={isAuthorized} component={ () => <Wiadomosci /> }/>
 
 					  	<Route path="/login" render={ () => <LoginWR  
 					  		isAuthorized={isAuthorized} onLogin={this.loginUser} onLoading={this.onLoading}/> }  />
+
 					  	<Route path="/about" render={ () => <About title="about ..."/> } />  
 
 					  	<Route component={NotFound} />
