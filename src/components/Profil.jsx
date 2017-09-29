@@ -1,4 +1,4 @@
-import {getEditProfileData} from '../authorize';
+
 
 import React, {Component} from 'react';
 import {Card, CardTitle, CardMedia} from 'material-ui/Card';
@@ -17,12 +17,8 @@ import Person from 'material-ui/svg-icons/social/person';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
 
 const baseURL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
-const itemsTajemnica = [];
-const itemsGrupa = [];
 
 export default class Profil extends Component {
 	static propTypes: {
@@ -36,37 +32,17 @@ export default class Profil extends Component {
 	    	editWindowOpen: false,
 	    	emailErrorText: '',
 	    	errorMessage: '',
-	    	tajemnica: null,
-	    	grupa: '',
-			//items : [],
 	    }
   	};
 
   	componentWillMount() {
-		getEditProfileData(localStorage.getItem('id_token'))
-	    	.then( data => {
-				for (let i = 0; i < data.tajemnice.length; i++ ) 
-					itemsTajemnica.push(<MenuItem value={i} key={data.tajemnice[i]._id} primaryText={data.tajemnice[i].name} />);
-				
-				for (let i = 0; i < data.grupy.length; i++ ) 
-					itemsGrupa.push(<MenuItem value={data.grupy[i]._id} key={i} primaryText={data.grupy[i].name} />);
 
-
-			    //this.props.onLoading(false);
-	    	})
-	    	.catch( err => {
-	    		console.log('component:',err);
-	    		this.setState({errorMessage:err.message});
-	    		this.props.onLoading(false);
-	    	});
 
   	};
 
 
 	handleOpen = () => {
-  		//this.props.onLoading(true);
-  		this.setState({tajemnica: this.props.user.tajemnica.number});	
-  		this.setState({grupa: this.props.user.grupa._id});	
+
   		this.setState({editWindowOpen: true});	
 
 	};
@@ -87,14 +63,6 @@ export default class Profil extends Component {
   		}
  	};
 
-
-	handleTajemnica = (event, index, value) => {
-	    this.setState({tajemnica:value});
-	};
-
-	handleGrupa = (event, index, value) => {
-	    this.setState({grupa:value});
-	};
 
 
 	render() {
@@ -183,37 +151,6 @@ export default class Profil extends Component {
 	    					> 
 	    					</ListItem>
 
-	 				    	<ListItem
-					    	  disabled={true}
-	      					  leftAvatar={ <Avatar  icon={<Favorite />}   /> } 
-	      					  primaryText={
-	      					    <SelectField
-	      					    	style={{marginTop:'-10px'}}
-							        value={this.state.tajemnica}
-							        onChange={this.handleTajemnica}
-							        maxHeight={200}
-							      >
-							        {itemsTajemnica}
-							    </SelectField>	
-	      					  }
-	    					> 
-	    					</ListItem> 
-
-	 				    	<ListItem
-					    	  disabled={true}
-	      					  leftAvatar={ <Avatar icon={<People />} /> }
-	      					  primaryText={
-	      					    <SelectField
-	      					    	style={{marginTop:'-10px'}}
-							        value={this.state.grupa}
-							        onChange={this.handleGrupa}
-							        maxHeight={200}
-							      >
-							        {itemsGrupa}
-							    </SelectField>	
-	      					  }	      					  
-	    					> 
-	    					</ListItem>  
 					    </List>
 			        </Dialog>			
 
