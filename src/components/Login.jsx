@@ -51,6 +51,7 @@ export default class Login extends Component {
  	}
 
  	submit(event){
+ 		event.preventDefault();
  		//fields verification
 		if (this.state.email.match(/@/)) {
 	      this.setState({ emailErrorText: '' });
@@ -92,7 +93,7 @@ export default class Login extends Component {
 	    }
 
 		return (
-		  <div className="container">
+		  <form className="container" onSubmit={this.submit.bind(this)}>
 		    <Card className="center">
 		    	<CardTitle title="Login"  />
 		    	{errorMessage.length>0 &&
@@ -120,7 +121,8 @@ export default class Login extends Component {
 			    <CardActions>
 			      <RaisedButton 
 			      	label="Submit" 
-			      	onClick={this.submit.bind(this)}
+			      	type="submit"
+			      	//onClick={this.submit.bind(this)}
 			      	primary={true}  
 			      	fullWidth={true} 
 			      	/>
@@ -138,7 +140,7 @@ export default class Login extends Component {
     			</CardActions>
     			<br />
 			</Card>
-		  </div>
+		  </form>
 		);
 	}
 }
