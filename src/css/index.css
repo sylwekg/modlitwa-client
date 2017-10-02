@@ -78,6 +78,8 @@
     background-color: crimson;	
 }
 
+
+
 html {
   font-family: 'Roboto', sans-serif;
 }
@@ -120,9 +122,27 @@ body {
 	    margin: auto;
 	}
 
-	.profileEditWindow {
-		width: 100%;
-		max-width: none;
+	.containerModal {
+	    padding-top: 70px;
+		position: relative;
+	}
+
+	.global--modal-content {
+	    width: 100% !important;
+	    transform: translate(0, 0) !important;
+	    position: absolute !important;
+	    top: 0 !important;
+	    height: 100vh !important;
+	}
+
+	.global--modal-body {
+	    padding: 0 !important;
+	    max-height: none !important;
+	}
+
+	.global--modal-paper {
+	    overflow: auto !important;
+	    height: 100vh !important;
 	}
 }
 
@@ -152,5 +172,15 @@ body {
 	    padding-top: 90px;
 	    max-width: 20rem;
 	    margin: auto;
+	}
+
+	.global--modal-body {
+	    padding: 0 !important;
+	    border-top: 0px !important;
+	    /*max-height: none !important;*/
+	}
+	.containerModal {
+	    padding-top: 70px;
+		position: relative;
 	}
 }
