@@ -1,3 +1,5 @@
+import {updateProfile} from '../authorize';
+
 import React, {Component} from 'react';
 import {Card, CardTitle, CardMedia} from 'material-ui/Card';
 import AvatarEditor from 'react-avatar-editor'
@@ -45,26 +47,15 @@ const styles = {
     opacity: 0,
   },
   appBar: {
-  	// flexWrap: 'wrap',
-   //  width: '100%',
-   //  paddingLeft: '10px',
-   //  paddingRight: '10px',
     position: "fixed",
   }
 };
-
-
-// const dialogWindow = {
-//   	width: '100%',
-//   	maxWidth: 'none',
-//   	height: '100%',
-//   	maxHeight: 'none',
-//   };
 
 export default class Profil extends Component {
 	static propTypes: {
 	    user: PropTypes.object.isRequired,
 	    onLoading: React.PropTypes.func.isRequired,
+	    onUserUpdate: React.PropTypes.func.isRequired,
 	};
 
     constructor(props) {
@@ -72,15 +63,27 @@ export default class Profil extends Component {
 	    this.state = { 
 	    	editWindowOpen: false,
 	    	emailErrorText: '',
+	    	nameErrorText: '',
+	    	telErrorText: '',
 	    	errorMessage: '',
 	    	editFotoMode: false,
 	    	imageScale: 1.2,
 	    	rotate: 0,
-	    	file: this.props.user.foto,
-	    	imagePreviewUrl: './images/avatar.jpg',
+	    	file: this.props.user.foto || '',
+	    	imagePreviewUrl: '',
+	    	imageCropUrl:'',
 	    	imageUrl: baseURL+"/api/avatars/"+this.props.user.foto,
+	    	name: this.props.user.name,
+	    	email: this.props.user.email,
+	    	tel: this.props.user.tel,
+	    	tajemnica: this.props.user.tajemnica ? this.props.user.tajemnica.name : ' ',
+	    	grupa: this.props.user.grupa ? this.props.user.grupa.name : ' ',
 	    }
   	};
+
+  	componentWillUpdate() {
+  		console.log('profile render');
+  	}
 
 	handleOpen = () => {
   		this.setState({
@@ -94,23 +97,63 @@ export default class Profil extends Component {
 	};
 
 	handleSave = () => {
-	   this.setState({
-	   	editWindowOpen: false,
-	   	imageUrl: this.state.imagePreviewUrl
-		});
+	    if(!this.state.emailErrorText && !this.state.nameErrorText && !this.state.telErrorText ) {
+			const {name, email, tel, imageCropUrl} = this.state;
+			//this.props.onLoading(true);
+			let token = localStorage.getItem('id_token') || '';
+	  		let userId = localStorage.getItem('userId') || '';
+
+		    updateProfile(name, email, tel, imageCropUrl, token, userId)
+			.then(resp => {
+				console.log('user data updated successfully:',resp);
+				//this.props.onLoading(false);
+				this.setState({	editWindowOpen: false });
+				this.props.onUserUpdate();
+			})
+			.catch(err => {
+				console.log(err);
+				this.setState({errorMessage: err})
+				//this.props.onLoading(false);
+			});  	
+	    }
 	};
 
   	onEmailChange = (event) => {
   		this.setState({errorMessage:''});
   		this.setState({email:event.target.value})
-  		if(this.state.emailErrorText) {
+  		//if(this.state.emailErrorText) {
   			if (event.target.value.match(/@/)) {
 		      this.setState({ emailErrorText: '' });
 		    } else {
 		      this.setState({ emailErrorText: 'Invalid email address' })
 		    }
-  		}
+  		//}
  	};
+
+ 	onNameChange = (event) => {
+  		this.setState({errorMessage:''});
+  		this.setState({name:event.target.value})
+  		//if(this.state.emailErrorText) {
+  			if (event.target.value.length>3) {
+		      this.setState({ nameErrorText: '' });
+		    } else {
+		      this.setState({ nameErrorText: 'Name too short' })
+		    }
+  		//}
+ 	};
+
+ 	onTelChange = (event) => {
+  		this.setState({errorMessage:''});
+  		this.setState({tel:event.target.value})
+  		//if(this.state.telErrorText) {
+  			if (event.target.value.length>=9) {
+		      this.setState({ telErrorText: '' });
+		    } else {
+		      this.setState({ telErrorText: 'Tel too short' })
+		    }
+  		//}
+ 	};
+
 
  	onImageChange = (event) => {
  		console.log('on image change triggered');
@@ -139,6 +182,7 @@ export default class Profil extends Component {
 	      const img = this.editor.getImageScaledToCanvas().toDataURL()
 	      //console.log(img);
 	 	  this.setState({
+	 	  	imageCropUrl: img,
 	 	  	imagePreviewUrl: img,
 	 	  	editFotoMode: false,
 	 	  });
@@ -153,7 +197,7 @@ export default class Profil extends Component {
   	};
 
   	onRotateRight = (e) => {
-	    e.preventDefault()
+	    //e.preventDefault()
 
 	    this.setState({
 	      rotate: this.state.rotate + 90
@@ -161,16 +205,18 @@ export default class Profil extends Component {
   	};
 
   	onCancel = (e) => {
-  		e.preventDefault()
+  		//e.preventDefault()
 
   		this.setState({
   			imagePreviewUrl: baseURL+"/api/avatars/"+this.props.user.foto,
+  			imageCropUrl: '',
   			editFotoMode:false,
   		})
   	};
 
 	render() {
 		const { user } = this.props
+
 	    // const actions = [
 	    //   <FlatButton
 	    //     label="Cancel"
@@ -308,10 +354,10 @@ export default class Profil extends Component {
 			      					  	  className="profileTextField"
 									      id="name"
 									      name="name"
-									      //errorText={this.state.emailErrorText}
-									      defaultValue={user.name}
+									      errorText={this.state.nameErrorText}
+									      defaultValue={this.state.name}
 									      floatingLabelText="Name"
-									      //onChange={this.onEmailChange}
+									      onChange={this.onNameChange}
 									    /> }
 			    					> 
 			    					</ListItem>
@@ -324,7 +370,7 @@ export default class Profil extends Component {
 									      id="email"
 									      name="email"
 									      errorText={this.state.emailErrorText}
-									      defaultValue={user.email}
+									      defaultValue={this.state.email}
 									      floatingLabelText="E-mail"
 									      onChange={this.onEmailChange}
 									    /> }
@@ -338,10 +384,10 @@ export default class Profil extends Component {
 			      					  	  className="profileTextField"
 									      id="tel"
 									      name="tel"
-									      //errorText={this.state.emailErrorText}
-									      defaultValue={user.tel}
+									      errorText={this.state.telErrorText}
+									      defaultValue={this.state.tel}
 									      floatingLabelText="Tel"
-									      //onChange={this.onEmailChange}
+									      onChange={this.onTelChange}
 									    /> }
 			    					> 
 			    					</ListItem>
@@ -372,14 +418,14 @@ export default class Profil extends Component {
 				    	  disabled={true}
       					  leftAvatar={ <Avatar  icon={<Favorite />}   /> } 
     					> 
-    					{user.tajemnica.name}
+    					{this.state.tajemnica}
     					</ListItem> 
 
  				    	<ListItem
 				    	  disabled={true}
       					  leftAvatar={ <Avatar icon={<People />} /> }
     					> 
-    					{user.grupa.name}
+    					{this.state.grupa}
     					</ListItem>  
 				    </List>
 		    	</Card>

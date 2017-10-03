@@ -53,6 +53,40 @@ export function getProfile(userId, token) {
 	});
 }
 
+export function updateProfile( name, email, tel, imageUrl, token, userId) {
+	var data = new FormData();
+	data.append("name",name);
+	data.append("email",email);
+	data.append("tel",tel);
+	data.append("imageUrl",imageUrl);
+
+	let config = {
+	    method: 'POST',
+	    headers: { 
+	     	'Authorization': 'Bearer '+ token 
+	    },
+	    body: data
+	}	
+	let path = baseURL+'/api/protected/users/edit/'+userId;
+	return new Promise((resolve, reject) => {
+		fetch(path, config)
+		  .then(response =>
+		    response.json()
+		    .then(user => ({ user, response }))
+		  ).then(({ user, response }) =>  {
+		    if (!response.ok) {
+		      // If there was a problem
+		      console.log('error on save attempt');
+		      reject(user)
+		    }
+		    else {
+		      // If login was successful, set the token in local storage
+		      resolve(user)
+		    }
+		}).catch(err => console.log("Upload Error: ", err))
+	});
+}
+
 // export function getEditProfileData(token) {
 // 	let config = {
 // 	    method: 'GET',

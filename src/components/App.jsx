@@ -80,8 +80,25 @@ export default class App extends Component {
   		});
   		localStorage.removeItem('id_token');
   		localStorage.removeItem('userId');
-  	}
+  	};
 
+  	onUserUpdate = () => {
+  		let token = localStorage.getItem('id_token') || '';
+  		let userId = localStorage.getItem('userId') || '';
+  		if(token && userId) {
+  			this.setState({loading:true});
+  			getProfile(userId, token)
+  				.then(user => {
+  					this.loginUser(user.user, token);
+  					console.log('user data received:',user);
+  					//this.props.history.push('/');
+  				})
+  				.catch(err => {
+  					console.log(err);
+  					this.onLogout();
+  				});
+  		}
+  	};
 //muiTheme={getMuiTheme(darkBaseTheme)}
 	render() {
 		const { isAuthorized, loading, user } = this.state
@@ -104,8 +121,10 @@ export default class App extends Component {
 					  		(<Login onLogin={this.loginUser} onLoading={this.onLoading}/>) } />       */}
 					  	<PrivateRoute path="/modlitwa" isAuthorized={isAuthorized} component={ () => <Modlitwa /> }/>
 
-					  	<PrivateRoute path="/profil" isAuthorized={isAuthorized} 
-					  		component={ () => <Profil user={user} onLoading={this.onLoading}/> }/>
+					  	<PrivateRoute path="/profil" isAuthorized={isAuthorized} component={ () =>
+					  		<Profil user={user} onLoading={this.onLoading} onUserUpdate={this.onUserUpdate} />
+					  	}/>
+					  				
 
 					  	<PrivateRoute path="/wiadomosci" isAuthorized={isAuthorized} component={ () => <Wiadomosci /> }/>
 
