@@ -1,10 +1,13 @@
 import {login} from '../authorize';
+import ErrorMessage from './ErrorMessage';
 
 import React, {Component} from 'react';
 import { Redirect } from 'react-router-dom';
 import TextField from 'material-ui/TextField';
 import {Card, CardTitle, CardActions, CardText} from 'material-ui/Card';
-import RaisedButton from 'material-ui/RaisedButton';;
+import RaisedButton from 'material-ui/RaisedButton';
+
+
 
 export default class Login extends Component {
 	static propTypes: {
@@ -12,6 +15,7 @@ export default class Login extends Component {
 	    onLoading: React.PropTypes.func.isRequired,
 	    history: PropTypes.object.isRequired,
 	    isAuthorized: PropTypes.bool.isRequired,
+	    errorMessage: PropTypes.string,
 	};
 
     constructor(props) {
@@ -22,7 +26,7 @@ export default class Login extends Component {
 	    	email: '',
 	    	password: '', 
 	    	redirectPath: this.props.history.location.state ? this.props.history.location.state.from.pathname : '/',
-	    	errorMessage: '',
+	    	errorMessage: this.props.errorMessage,//? this.props.errorMessage : '',
 	    }
     }
 
@@ -95,12 +99,11 @@ export default class Login extends Component {
 		return (
 		  <form className="container" onSubmit={this.submit.bind(this)}>
 		    <Card className="center">
+
 		    	<CardTitle title="Login"  />
-		    	{errorMessage.length>0 &&
-		    	<div className="errorMessage">
-		    		<p> {errorMessage} </p>
-		    	</div>
-		    	}
+
+		    	<ErrorMessage msg={errorMessage} />
+
 			    <TextField
 			      id="email"
 			      name="email"

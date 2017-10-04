@@ -1,4 +1,5 @@
 import {updateProfile} from '../authorize';
+import ErrorMessage from './ErrorMessage';
 
 import React, {Component} from 'react';
 import {Card, CardTitle, CardMedia} from 'material-ui/Card';
@@ -112,7 +113,7 @@ export default class Profil extends Component {
 			})
 			.catch(err => {
 				console.log(err);
-				this.setState({errorMessage: err})
+				this.setState({errorMessage: err.message})
 				//this.props.onLoading(false);
 			});  	
 	    }
@@ -217,23 +218,10 @@ export default class Profil extends Component {
 	render() {
 		const { user } = this.props
 
-	    // const actions = [
-	    //   <FlatButton
-	    //     label="Cancel"
-	    //     primary={true}
-	    //     keyboardFocused={true}
-	    //     onClick={this.handleClose}
-	    //   />,
-	    //   <FlatButton
-	    //     label="Save"
-	    //     primary={true}
-	    //     onClick={this.handleSave}
-	    //   />,
-	    // ];
-
 		return (
 			<div className="container">
 		    	<Card className="center">
+		    	
 				    <CardMedia overlay={<CardTitle title={user.name}  />} >
 					    <div className="picBox">
 					    	<img className="img-circle" src={this.state.imageUrl} 
@@ -272,6 +260,10 @@ export default class Profil extends Component {
 					    onRightIconButtonTouchTap={this.handleSave}
 					 	/>
 
+					 	<div className="errorMessageEditWindow" >
+					 		<ErrorMessage msg={this.state.errorMessage} />
+					 	</div>
+					 	
 					 	<div className="containerModal">
 				        	{!this.state.editFotoMode &&
 							<div className="center">

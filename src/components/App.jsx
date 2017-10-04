@@ -36,6 +36,7 @@ export default class App extends Component {
 	      	user:{},
 	      	loading: false,
 	      	isAuthorized: false,
+          errorMessage: '',
 	    	};
   	};
 
@@ -52,7 +53,7 @@ export default class App extends Component {
   				})
   				.catch(err => {
   					console.log(err);
-  					this.onLogout();
+  					this.onLogout(err.message);
   				});
   		} 
   		console.log('componentWillMount');
@@ -71,12 +72,13 @@ export default class App extends Component {
   		this.setState({ loading: loading });
   	};
 
-  	onLogout = () => {
+  	onLogout = (err) => {
   		this.setState({
 	    	access_token :"",
 	      	user:{},
 	      	loading: false,
 	      	isAuthorized: false,
+          errorMessage: err,
   		});
   		localStorage.removeItem('id_token');
   		localStorage.removeItem('userId');
@@ -95,13 +97,13 @@ export default class App extends Component {
   				})
   				.catch(err => {
   					console.log(err);
-  					this.onLogout();
+  					this.onLogout(err.message);
   				});
   		}
   	};
 //muiTheme={getMuiTheme(darkBaseTheme)}
 	render() {
-		const { isAuthorized, loading, user } = this.state
+		const { isAuthorized, loading, user, errorMessage } = this.state
 
 		return (
 		<MuiThemeProvider >
@@ -128,8 +130,10 @@ export default class App extends Component {
 
 					  	<PrivateRoute path="/wiadomosci" isAuthorized={isAuthorized} component={ () => <Wiadomosci /> }/>
 
-					  	<Route path="/login" render={ () => <LoginWR  
-					  		isAuthorized={isAuthorized} onLogin={this.loginUser} onLoading={this.onLoading}/> }  />
+					  	<Route path="/login" render={ () => 
+                <LoginWR isAuthorized={isAuthorized} onLogin={this.loginUser}  
+                onLoading={this.onLoading} errorMessage={errorMessage}  />
+              } />
 
 					  	<Route path="/about" render={ () => <About title="about ..."/> } />  
 
