@@ -20,7 +20,10 @@ export function login(email, password) {
 		      // If login was successful, set the token in local storage
 		      resolve(user)
 		    }
-		}).catch(err => console.log("Login Error: ", err))
+		}).catch(err => { 
+			console.log("Login Error: ", err);
+			reject(err);
+			})
 	});
 }
 
@@ -49,7 +52,10 @@ export function getProfile(userId, token) {
 		      // If login was successful, set the token in local storage
 		      resolve(user)
 		    }
-		}).catch(err => console.log("Login Error: ", err))
+		}).catch(err => { 
+			console.log("Login Error: ", err);
+			reject(err);
+		 })
 	});
 }
 

@@ -85,14 +85,88 @@
 
 
 html {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto', sans-serif !important;
+  height: 100%;
 }
 
 body {
 	margin: 0px;
+	height: 100%;
 /*  font-size: 13px;
   line-height: 20px;*/
 }
+
+/*===== FRONT PAGE ONLY =======================================================*/
+/* The hero image */
+.hero-image {
+    /* The image used */
+    background-image: url("../images/hero.jpg");
+
+    /* Set a specific height */
+    height: 400px;
+
+    /* Position and center the image to scale nicely on all screens */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+/* Place text in the middle of the image */
+.hero-text {
+	
+    text-align: center;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-family: 'Roboto', sans-serif;
+
+}
+
+.frontPage {
+	padding-right: 0px; 
+    padding-left: 0px; 
+    padding-top: 65px;
+    max-width: 100%;
+    margin: auto;
+}
+
+.productArgument {
+	font-family: 'Roboto', sans-serif;
+	box-sizing: border-box;
+	font-weight: normal;
+}
+
+.column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Responsive layout - makes a two column-layout instead of four columns */
+@media (max-width: 900px) {
+    .column  {
+        width: 50%;
+    }
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media (max-width: 600px) {
+    .column  {
+        width: 100%;
+    }
+}
+
+/*==========END FRONT PAGE==========================================*/
 
 @media (min-width: 0) and (max-width: 768px) { 
 	.title {
@@ -148,6 +222,9 @@ body {
 	    overflow: auto !important;
 	    height: 100vh !important;
 	}
+	.frontPage {
+	    padding-top: 135px;
+	}
 }
 
 @media (min-width: 769px) {
@@ -186,5 +263,8 @@ body {
 	.containerModal {
 	    padding-top: 70px;
 		position: relative;
+	}
+	.frontPage {
+	    padding-top: 64px;
 	}
 }
