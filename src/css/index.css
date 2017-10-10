@@ -100,7 +100,7 @@ body {
 /* The hero image */
 .hero-image {
     /* The image used */
-    background-image: url("../images/hero.jpg");
+    background-image: url("../images/hero2.jpg");
 
     /* Set a specific height */
     height: 400px;
@@ -112,18 +112,7 @@ body {
     position: relative;
 }
 
-/* Place text in the middle of the image */
-.hero-text {
-	
-    text-align: center;
-    position: absolute;
-    top: 20%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-family: 'Roboto', sans-serif;
 
-}
 
 .frontPage {
 	padding-right: 0px; 
@@ -223,7 +212,19 @@ body {
 	    height: 100vh !important;
 	}
 	.frontPage {
-	    padding-top: 135px;
+	    padding-top: 64px;
+	}
+	/* Place text in the middle of the image */
+	.hero-text {
+		
+	    text-align: center;
+	    position: absolute;
+	    top: 40%;
+	    left: 50%;
+	    transform: translate(-50%, -50%);
+	    color: white;
+	    font-family: 'Roboto', sans-serif;
+
 	}
 }
 
@@ -266,5 +267,17 @@ body {
 	}
 	.frontPage {
 	    padding-top: 64px;
+	}
+	/* Place text in the middle of the image */
+	.hero-text {
+		
+	    text-align: center;
+	    position: absolute;
+	    top: 20%;
+	    left: 50%;
+	    transform: translate(-50%, -50%);
+	    color: white;
+	    font-family: 'Roboto', sans-serif;
+
 	}
 }

@@ -118,7 +118,9 @@ export default class App extends Component {
 				  	<Switch>
 					  	<Route exact path="/" render={ () => <Home  /> }/>
 
-					  	<PrivateRoute path="/grupa" isAuthorized={isAuthorized} component={ () => <Grupa /> }/>
+					  	<PrivateRoute path="/grupa" isAuthorized={isAuthorized} component={ () => 
+                <Grupa groupId={ user.grupa ? user.grupa._id : null} errorMessage={errorMessage} /> 
+              }/>
 {/*					  	<Route path="/grupa" render= { () => (isAuthorized) ? ( <Grupa /> ) : 
 					  		(<Login onLogin={this.loginUser} onLoading={this.onLoading}/>) } />       */}
 					  	<PrivateRoute path="/modlitwa" isAuthorized={isAuthorized} component={ () => <Modlitwa /> }/>

@@ -17,7 +17,8 @@ class Home extends Component {
       <div className="frontPage">
         <div className="hero-image" >
           <div className="hero-text">
-            <p style={{'fontSize':'200%'}} > Chcesz się przyłączyć ? </p>
+            {/*<p style={{'fontSize':'200%'}} > Chcesz się przyłączyć ? </p> */}
+
             <RaisedButton label="Contact us" />
           </div>
         </div>
