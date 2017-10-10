@@ -24,6 +24,7 @@ import Profil from './Profil';
 import Wiadomosci from './Wiadomosci';
 import Login from './Login';
 import PrivateRoute from './Privateroute';
+import ProgressIndicator from './ProgressIndicator';
 
 const HeaderWithRouter = withRouter(Header);
 const LoginWR = withRouter(Login);
@@ -32,7 +33,7 @@ export default class App extends Component {
 	constructor() {
 	    super();
 	    this.state = {
-	    	access_token :"",
+	    	  access_token :"",
 	      	user:{},
 	      	loading: false,
 	      	isAuthorized: false,
@@ -68,10 +69,6 @@ export default class App extends Component {
         });
   	};
 
-  	onLoading = (loading) => {
-  		this.setState({ loading: loading });
-  	};
-
   	onLogout = (err) => {
   		this.setState({
 	    	access_token :"",
@@ -103,7 +100,7 @@ export default class App extends Component {
   	};
 //muiTheme={getMuiTheme(darkBaseTheme)}
 	render() {
-		const { isAuthorized, loading, user, errorMessage } = this.state
+		const { isAuthorized, user, errorMessage, loading } = this.state
 
 		return (
 		<MuiThemeProvider >
@@ -111,10 +108,9 @@ export default class App extends Component {
 			  	<div>
 				  	<Route path="/" render={ () => <HeaderWithRouter 
 				  		isAuthorized={isAuthorized} 
-				  		loading={loading}
 				  		onLogout={this.onLogout} /> 
 				  	}  />
-				  	
+				  	<ProgressIndicator showProg={loading} />
 				  	<Switch>
 					  	<Route exact path="/" render={ () => <Home  /> }/>
 
@@ -126,21 +122,20 @@ export default class App extends Component {
 					  	<PrivateRoute path="/modlitwa" isAuthorized={isAuthorized} component={ () => <Modlitwa /> }/>
 
 					  	<PrivateRoute path="/profil" isAuthorized={isAuthorized} component={ () =>
-					  		<Profil user={user} onLoading={this.onLoading} onUserUpdate={this.onUserUpdate} />
+					  		<Profil user={user} onUserUpdate={this.onUserUpdate} />
 					  	}/>
 					  				
 
 					  	<PrivateRoute path="/wiadomosci" isAuthorized={isAuthorized} component={ () => <Wiadomosci /> }/>
 
 					  	<Route path="/login" render={ () => 
-                <LoginWR isAuthorized={isAuthorized} onLogin={this.loginUser}  
-                onLoading={this.onLoading} errorMessage={errorMessage}  />
+                <LoginWR isAuthorized={isAuthorized} onLogin={this.loginUser} errorMessage={errorMessage}  />
               } />
 
 					  	<Route path="/about" render={ () => <About title="about ..."/> } />  
 
 					  	<Route component={NotFound} />
-					</Switch>
+					 </Switch>
 			  	</div>
 			</BrowserRouter>
 		</MuiThemeProvider>

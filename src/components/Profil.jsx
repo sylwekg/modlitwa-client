@@ -1,5 +1,6 @@
 import {updateProfile} from '../authorize';
 import ErrorMessage from './ErrorMessage';
+import ProgressIndicator from './ProgressIndicator';
 
 import React, {Component} from 'react';
 import {Card, CardTitle, CardMedia} from 'material-ui/Card';
@@ -24,8 +25,6 @@ import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Slider from 'material-ui/Slider';
-
-
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
@@ -55,13 +54,13 @@ const styles = {
 export default class Profil extends Component {
 	static propTypes: {
 	    user: PropTypes.object.isRequired,
-	    onLoading: React.PropTypes.func.isRequired,
 	    onUserUpdate: React.PropTypes.func.isRequired,
 	};
 
     constructor(props) {
 	    super(props)
 	    this.state = { 
+	    	loading: false,
 	    	editWindowOpen: false,
 	    	emailErrorText: '',
 	    	nameErrorText: '',
@@ -100,21 +99,25 @@ export default class Profil extends Component {
 	handleSave = () => {
 	    if(!this.state.emailErrorText && !this.state.nameErrorText && !this.state.telErrorText ) {
 			const {name, email, tel, imageCropUrl} = this.state;
-			//this.props.onLoading(true);
+			this.setState({ loading: true });
 			let token = localStorage.getItem('id_token') || '';
 	  		let userId = localStorage.getItem('userId') || '';
 
 		    updateProfile(name, email, tel, imageCropUrl, token, userId)
 			.then(resp => {
 				console.log('user data updated successfully:',resp);
-				//this.props.onLoading(false);
-				this.setState({	editWindowOpen: false });
+				this.setState({	
+					editWindowOpen: false,
+					loading: false,
+				});
 				this.props.onUserUpdate();
 			})
 			.catch(err => {
 				console.log(err);
-				this.setState({errorMessage: err.message})
-				//this.props.onLoading(false);
+				this.setState({
+					errorMessage: err.message,
+					loading: false,
+				})
 			});  	
 	    }
 	};
@@ -181,15 +184,11 @@ export default class Profil extends Component {
 	      // This returns a HTMLCanvasElement, it can be made into a data URL or a blob, 
 	      // drawn on another canvas, or added to the DOM. 
 	      const img = this.editor.getImageScaledToCanvas().toDataURL()
-	      //console.log(img);
 	 	  this.setState({
 	 	  	imageCropUrl: img,
 	 	  	imagePreviewUrl: img,
 	 	  	editFotoMode: false,
 	 	  });
-
-	      // If you want the image resized to the canvas size (also a HTMLCanvasElement) 
-	      //const canvasScaled = this.editor.getImageScaledToCanvas()
 	    }
  	};
 
@@ -198,16 +197,12 @@ export default class Profil extends Component {
   	};
 
   	onRotateRight = (e) => {
-	    //e.preventDefault()
-
 	    this.setState({
 	      rotate: this.state.rotate + 90
 	    })
   	};
 
   	onCancel = (e) => {
-  		//e.preventDefault()
-
   		this.setState({
   			imagePreviewUrl: baseURL+"/api/avatars/"+this.props.user.foto,
   			imageCropUrl: '',
@@ -220,6 +215,7 @@ export default class Profil extends Component {
 
 		return (
 			<div className="container">
+				<ProgressIndicator showProg={this.state.loading} />
 		    	<Card className="center">
 		    	
 				    <CardMedia overlay={<CardTitle title={user.name}  />} >

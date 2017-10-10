@@ -2,18 +2,15 @@ import React , { Component } from 'react';
 import {NavLink} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-// import FlatButton from 'material-ui/FlatButton';
-// import IconButton from 'material-ui/IconButton';
 import AppBar from 'material-ui/AppBar';
 import {Tabs, Tab} from 'material-ui/Tabs';
-//import FontIcon from 'material-ui/FontIcon';
 import People from 'material-ui/svg-icons/social/people';
 import Favorite from 'material-ui/svg-icons/action/favorite';
 import Face from 'material-ui/svg-icons/action/face';
 import Message from 'material-ui/svg-icons/communication/message';
 import Person from 'material-ui/svg-icons/social/person';
 //import ActionHome from 'material-ui/svg-icons/action/home';
-import CircularProgress from 'material-ui/CircularProgress'
+
 
 var MediaQuery = require('react-responsive');
 
@@ -63,13 +60,10 @@ class Header extends Component {
       isAuthorized: PropTypes.bool.isRequired,
       onLogout: PropTypes.func.isRequired,
       history: PropTypes.object.isRequired,
-      loading: PropTypes.bool.isRequired,
   };
   
   handleTouchTap = () => {
-    //this.forceUpdate();
     this.props.history.push("/");
-    
   };
 
   handleLogout = () => {
@@ -77,18 +71,11 @@ class Header extends Component {
     this.props.history.push("/");
   };
 
-
-
   render() {
-    const { isAuthorized, loading } = this.props
+    const { isAuthorized } = this.props
 
     return (
       <header>
-        {loading && 
-        <div className="progressIndicator">
-          <CircularProgress size={60} thickness={7} />
-        </div> }
-
         <MediaQuery query='(min-width: 769px)'>
           <AppBar 
             title={<span className="title">ModlitwaOnline.pl</span>} 

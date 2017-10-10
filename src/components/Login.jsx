@@ -1,6 +1,6 @@
 import {login} from '../authorize';
 import ErrorMessage from './ErrorMessage';
-
+import ProgressIndicator from './ProgressIndicator';
 import React, {Component} from 'react';
 import { Redirect } from 'react-router-dom';
 import TextField from 'material-ui/TextField';
@@ -12,7 +12,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 export default class Login extends Component {
 	static propTypes: {
 	    onLogin: React.PropTypes.func.isRequired,
-	    onLoading: React.PropTypes.func.isRequired,
+	    //onLoading: React.PropTypes.func.isRequired,
 	    history: PropTypes.object.isRequired,
 	    isAuthorized: PropTypes.bool.isRequired,
 	    errorMessage: PropTypes.string,
@@ -21,6 +21,7 @@ export default class Login extends Component {
     constructor(props) {
 	    super(props)
 	    this.state = { 
+	    	loading: false,
 	    	emailErrorText: '', 
 	    	passwordErrorText: '',
 	    	email: '',
@@ -71,23 +72,28 @@ export default class Login extends Component {
 
 	    if(this.state.password.length > 3 && this.state.email.match(/@/)){
 	    	// fetch data - display progress circle
-	    	this.props.onLoading(true);
+	    	//this.props.onLoading(true);
+	    	this.setState({ loading: true });
 	    	login(this.state.email,this.state.password)
 	    	.then( user => {
-	    		  localStorage.setItem('id_token', user.access_token);
-	    		  localStorage.setItem('userId', user.user._id);
-			      this.props.onLogin(user.user, user.access_token);
+	    		this.setState({ loading: false });
+	    		localStorage.setItem('id_token', user.access_token);
+	    		localStorage.setItem('userId', user.user._id);
+			    this.props.onLogin(user.user, user.access_token);
 	    	})
 	    	.catch( err => {
 	    		console.log('component:',err);
-	    		this.setState({errorMessage:err.message});
-	    		this.props.onLoading(false);
+	    		this.setState({
+	    			errorMessage:err.message,
+	    			loading: false,
+	    		});
+	    		//this.props.onLoading(false);
 	    	});
 	    }
  	}
 
 	render() {
-	    const { errorMessage, redirectPath } = this.state
+	    const { errorMessage, redirectPath, loading } = this.state
 	    console.log('login render');
 
 	    if ( this.props.isAuthorized) {
@@ -98,6 +104,7 @@ export default class Login extends Component {
 
 		return (
 		  <form className="container" onSubmit={this.submit.bind(this)}>
+		  	<ProgressIndicator showProg={loading} />
 		    <Card className="center">
 
 		    	<CardTitle title="Login"  />
