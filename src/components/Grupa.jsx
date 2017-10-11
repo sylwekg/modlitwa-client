@@ -27,10 +27,10 @@ export default class Grupa extends Component {
 	    this.state = { 
 	    	errorMessage: this.props.errorMessage,
 	    	loading: false,
-	    	name : 'group not exist',
+	    	name : "group doesn't exist",
 	    	imageUrl: '',
 	    	opiekun : { 
-	    		name: 'opiekun not assigned',
+	    		name: 'opiekun is not assigned',
 	    		tel: 'N/A',
 	    		foto: 'avatar.jpg',
 	    		},

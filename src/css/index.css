@@ -76,6 +76,26 @@
 .errorMessage {
     padding: 1px;
     background-color: crimson;	
+    text-align: center;
+    color: white;
+}
+
+/* The close button */
+.closebtn {
+    margin-right: 15px;
+    margin-top: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* When moving the mouse over the close button */
+.closebtn:hover {
+    color: black;
 }
 
 .errorMessageEditWindow {

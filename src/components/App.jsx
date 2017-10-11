@@ -106,10 +106,10 @@ export default class App extends Component {
 		<MuiThemeProvider >
 			<BrowserRouter>	 
 			  	<div>
-				  	<Route path="/" render={ () => <HeaderWithRouter 
-				  		isAuthorized={isAuthorized} 
-				  		onLogout={this.onLogout} /> 
-				  	}  />
+				  	<Route 
+              path="/" 
+              render={ () => <HeaderWithRouter isAuthorized={isAuthorized}  onLogout={this.onLogout} /> }  
+              />
 				  	<ProgressIndicator showProg={loading} />
 				  	<Switch>
 					  	<Route exact path="/" render={ () => <Home  /> }/>

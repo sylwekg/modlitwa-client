@@ -1,5 +1,22 @@
 const baseURL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
 
+export function translate(errMsg) {
+	const transList = [
+	  {
+	    server: "Failed to fetch",
+	    client: "Server not responding",
+	  },
+	];
+
+	let result=errMsg;  
+	transList.forEach( (item, index) => {
+		//console.log('comparing ',errMsg.message,' with ',item.server);
+		if(!errMsg.message.localeCompare(item.server)) 
+			result.message = item.client;	
+	}); 
+	return result;
+}
+
 export function login(email, password) {
 	let config = {
 	    method: 'POST',
@@ -22,7 +39,7 @@ export function login(email, password) {
 		    }
 		}).catch(err => { 
 			console.log("Login Error: ", err);
-			reject(err);
+			reject(translate(err));
 			})
 	});
 }
@@ -54,7 +71,7 @@ export function getProfile(userId, token) {
 		    }
 		}).catch(err => { 
 			console.log("Login Error: ", err);
-			reject(err);
+			reject(translate(err));
 		 })
 	});
 }
@@ -89,7 +106,10 @@ export function updateProfile( name, email, tel, imageUrl, token, userId) {
 		      // If login was successful, set the token in local storage
 		      resolve(user)
 		    }
-		}).catch(err => console.log("Upload Error: ", err))
+		}).catch(err => {
+			console.log("Upload Error: ", err);
+			reject(translate(err));
+		})
 	});
 }
 
@@ -120,7 +140,7 @@ export function getGroupData(groupId, token) {
 		    }
 		}).catch(err => { 
 			console.log("Login Error: ", err);
-			reject(err);
+			reject(translate(err));
 		 })
 	});
 }

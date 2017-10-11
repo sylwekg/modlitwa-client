@@ -1,6 +1,6 @@
 import {login} from './authorize';
 import {getProfile} from './authorize';
-
+import {translate} from './authorize';
 
 describe('Watch-dog', () => {
 	test('Alive test', () => {
@@ -47,6 +47,16 @@ describe('Client-server tests', () => {
 	  	})
 	});
 
+	let msg1 = new Error('error not to be translated');
+	test('translation test - phrase not in library', () => {
+		expect(translate(msg1)).toMatchObject(msg1);
+	})
+
+	let msg2 = new Error('Failed to fetch');
+	let msgTr = new Error('Server not responding');
+	test('translation test - phrase in library', () => {
+		expect(translate(msg2)).toMatchObject(msgTr);
+	})
 
 
 	// test('Get profile data', () => {
@@ -59,10 +69,7 @@ describe('Client-server tests', () => {
   		
  //  	});
 
-
-
-
-
 });
+
 
 

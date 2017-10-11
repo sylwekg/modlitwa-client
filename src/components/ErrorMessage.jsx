@@ -6,13 +6,24 @@ export default class  ErrorMessage extends Component {
 	    msg: PropTypes.string,
 	};
 
+    constructor(props) {
+	    super(props)
+	    this.state = { 
+			errorConfirmed: false,
+	    }
+  	};
+
+  	onAcknowledge() {
+  		this.setState({ errorConfirmed: true })
+  	};
 
 	render() {
 		return (
 		  <div>
-	    	{this.props.msg.length>0 &&
+	    	{this.props.msg.length>0 && !this.state.errorConfirmed &&
 	    	<div className="errorMessage">
-	    		<p> {this.props.msg} </p>
+	    		<span className="closebtn" onClick={this.onAcknowledge.bind(this)} > &times; </span>
+	    		<p style={{'marginLeft': '15px'}}> {this.props.msg} </p>
 	    	</div>
 	    	}	
 		  </div>
