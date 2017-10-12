@@ -119,14 +119,18 @@ export default class App extends Component {
               }/>
 {/*					  	<Route path="/grupa" render= { () => (isAuthorized) ? ( <Grupa /> ) : 
 					  		(<Login onLogin={this.loginUser} onLoading={this.onLoading}/>) } />       */}
-					  	<PrivateRoute path="/modlitwa" isAuthorized={isAuthorized} component={ () => <Modlitwa /> }/>
+					  	<PrivateRoute path="/modlitwa" isAuthorized={isAuthorized} component={ () => 
+                <Modlitwa /> 
+              }/>
 
 					  	<PrivateRoute path="/profil" isAuthorized={isAuthorized} component={ () =>
 					  		<Profil user={user} onUserUpdate={this.onUserUpdate} />
 					  	}/>
 					  				
 
-					  	<PrivateRoute path="/wiadomosci" isAuthorized={isAuthorized} component={ () => <Wiadomosci /> }/>
+					  	<PrivateRoute path="/wiadomosci" isAuthorized={isAuthorized} component={ () => 
+                <Wiadomosci messages={user.messages} /> 
+              }/>
 
 					  	<Route path="/login" render={ () => 
                 <LoginWR isAuthorized={isAuthorized} onLogin={this.loginUser} errorMessage={errorMessage}  />

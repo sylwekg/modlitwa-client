@@ -25,7 +25,7 @@ export default class Grupa extends Component {
     constructor(props) {
 	    super(props)
 	    this.state = { 
-	    	errorMessage: this.props.errorMessage,
+	    	errorMessage: '',
 	    	loading: false,
 	    	name : "group doesn't exist",
 	    	imageUrl: '',
