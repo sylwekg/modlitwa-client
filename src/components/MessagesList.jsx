@@ -3,7 +3,7 @@ import {List, ListItem} from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import {darkBlack, lightBlack} from 'material-ui/styles/colors';
 import Divider from 'material-ui/Divider';
-import DateDisplay from './DateDisplay';
+import moment from 'moment';
 
 const MessagesList = props => { 
 
@@ -13,19 +13,38 @@ const MessagesList = props => {
 
   if(results.length) {
     messagesList=results.map( msg => {
+      //date converter
+      let displayT, displayD, displayY;
+      if(msg.date) {
+        let currentYear = new Date().getFullYear();
+        let checkYear= currentYear - new Date(msg.date).getFullYear();
+        if(checkYear > 0 ) {
+          displayD=moment(msg.date).format("DD-MMM"); 
+          displayY=moment(msg.date).format("YYYY"); 
+        }
+        else {
+          displayD = moment(msg.date).format("DD-MMM");
+          displayT = moment(msg.date).format("HH:mm");  
+        }
+      } 
+      else {
+        displayT="12:00";
+      }
+
       return (
         <div key={msg._id}>
           <ListItem
             leftAvatar={<Avatar src={baseURL+"/api/avatars/"+ msg.from.foto}  />}
             primaryText={msg.from.name}
-            secondaryText={
-              <p>
-           {/*     <span style={{color: darkBlack}}> {msg.from.name} </span> -- */}
-                {msg.content}
-              </p>
+            secondaryText={ <p> {msg.content} </p> }
+            secondaryTextLines={3}
+            rightAvatar={
+              <Avatar 
+              size={50} 
+              style={{color: 'lightBlack', fontSize:'12px', background:'transparent'}} 
+              >{displayY &&<br/>}{displayD}<br/>{displayT}</Avatar>
             }
-            //secondaryTextLines={2}
-            //rightAvatar={<DateDisplay date={msg.from.date}/>}
+            //rightAvatar={<DateDisplay className="dateDisplay" date={msg.date}/>}
           />
           <Divider inset={true} />
         </div>
