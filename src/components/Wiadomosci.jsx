@@ -1,4 +1,4 @@
-import {getProfile} from '../authorize';
+import {getProfile, deleteMsg} from '../authorize';
 import React, {Component} from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
@@ -70,9 +70,25 @@ export default class Wiadomosci extends Component {
     this.setState({ editWindowOpen: false});
   };
 
-  handleDelete = () => {
+  refreshMessagesList = () => {
 
-    this.setState({ editWindowOpen: false});
+  };
+
+  handleDelete = () => {
+    console.log('zostanie skasowana: ',this.state.editWindowMsg._id);
+    //kasowanie wiadomosci
+    let token = localStorage.getItem('id_token') || '';
+    let userId = localStorage.getItem('userId') || '';
+    this.setState({loading:true});
+    deleteMsg(this.state.editWindowMsg._id, userId , token)
+    .then( result => {
+      console.log(result);
+      this.setState({ editWindowOpen: false, loading:false });
+    })
+    .catch( err => {
+      console.log(err);
+      this.setState({ errorMessage:err.message, loading:false });
+    })
   };
 
   render() {
