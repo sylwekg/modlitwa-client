@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {List, ListItem} from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import {darkBlack, lightBlack} from 'material-ui/styles/colors';
@@ -37,7 +38,8 @@ const MessagesList = props => {
             leftAvatar={<Avatar src={baseURL+"/api/avatars/"+ msg.from.foto}  />}
             primaryText={msg.from.name}
             secondaryText={ <p> {msg.content} </p> }
-            secondaryTextLines={3}
+            secondaryTextLines={2}
+            onClick={ (event) => {props.onClick( msg ); } }
             rightAvatar={
               <Avatar 
               size={50} 
@@ -61,5 +63,11 @@ const MessagesList = props => {
     </List>
   );
 }
+
+MessagesList.propTypes = {
+  messages: PropTypes.array,
+  onClick: PropTypes.func.isRequired,
+}
+
 
 export default MessagesList;
