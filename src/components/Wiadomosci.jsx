@@ -1,5 +1,6 @@
 import {getProfile, deleteMsg} from '../authorize';
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import AppBar from 'material-ui/AppBar';
@@ -11,6 +12,7 @@ import ProgressIndicator from './ProgressIndicator';
 import {Card, CardHeader } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar';
 import moment from 'moment';
+import ReactPullToRefresh from 'react-pull-to-refresh';
 
 const baseURL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
 
@@ -18,6 +20,7 @@ export default class Wiadomosci extends Component {
   static propTypes: {
       messages: PropTypes.array,
       errorMessage: PropTypes.string,
+      dataRefresh: PropTypes.func, 
   };
 
   constructor(props) {
@@ -43,7 +46,6 @@ export default class Wiadomosci extends Component {
         getProfile(message.from, token)
         .then( data => { 
           messages.push(Object.assign({}, message, {from: data.user }));
-          
           if ( index === results.length-1 ) {
             this.setState({ messages: messages, loading: false });
           }
@@ -63,16 +65,21 @@ export default class Wiadomosci extends Component {
       editWindowOpen: true,
       editWindowMsg: message,
     }); 
-
   };
 
   handleClose = () => {
     this.setState({ editWindowOpen: false});
   };
 
-  refreshMessagesList = () => {
+  // handleRefresh(event) {
+  //   event.preventDefault();
+  //   console.log('handle refresh');
+  //   this.props.dataRefresh();
+  // };
 
-  };
+  handlePullRefresh() {
+
+  }
 
   handleDelete = () => {
     console.log('zostanie skasowana: ',this.state.editWindowMsg._id);
@@ -84,6 +91,7 @@ export default class Wiadomosci extends Component {
     .then( result => {
       console.log(result);
       this.setState({ editWindowOpen: false, loading:false });
+      this.props.dataRefresh();
     })
     .catch( err => {
       console.log(err);
@@ -98,7 +106,16 @@ export default class Wiadomosci extends Component {
         <ProgressIndicator showProg={loading} />
         <ErrorMessage msg={errorMessage} />     
         <Card className="center">
-          <MessagesList messages={messages} onClick={this.handleOpen} />
+
+          <ReactPullToRefresh
+            onRefresh={this.handlePullRefresh}
+            >
+            <MessagesList messages={messages} onClick={this.handleOpen} 
+            //onDrag={this.handleRefresh}
+             />
+          </ReactPullToRefresh>
+
+          {/* Show full message modal window */}
           <Dialog
             modal={true}
             open={editWindowOpen}

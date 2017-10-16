@@ -58,15 +58,20 @@ const MessagesList = props => {
   }
 
   return(
-    <List className="left">
-      {messagesList}
-    </List>
+    <div >
+      <List className="left" 
+      //onDragEnd={(event)=> {props.onDrag}} draggable="true" 
+      >
+        {messagesList}
+      </List>
+    </div>
   );
 }
 
 MessagesList.propTypes = {
   messages: PropTypes.array,
   onClick: PropTypes.func.isRequired,
+  //onDrag: PropTypes.func.isRequired,
 }
 
 

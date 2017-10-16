@@ -42,23 +42,27 @@ export default class App extends Component {
   	};
 
   	componentWillMount() {
-  		let token = localStorage.getItem('id_token') || '';
-  		let userId = localStorage.getItem('userId') || '';
-  		if(token && userId) {
-  			this.setState({loading:true});
-  			getProfile(userId, token)
-  				.then(user => {
-  					this.loginUser(user.user, token);
-  					console.log('user data received:',user);
-  					//this.props.history.push('/');
-  				})
-  				.catch(err => {
-  					console.log(err);
-  					this.onLogout(err.message);
-  				});
-  		} 
+		this.dataRefresh();
   		console.log('componentWillMount');
-    };
+	};
+	
+	dataRefresh = () => {
+		console.log('data refresh request');
+		let token = localStorage.getItem('id_token') || '';
+		let userId = localStorage.getItem('userId') || '';
+		if(token && userId) {
+			//this.setState({loading:true});
+			getProfile(userId, token)
+				.then(user => {
+					this.loginUser(user.user, token);
+					console.log('user data received:',user);
+				})
+				.catch(err => {
+					console.log(err);
+					this.onLogout(err.message);
+				});
+		} 
+	}
 
   	loginUser = (user, token) => {
   		  this.setState({
@@ -129,7 +133,7 @@ export default class App extends Component {
 					  				
 
 					  	<PrivateRoute path="/wiadomosci" isAuthorized={isAuthorized} component={ () => 
-                <Wiadomosci messages={user.messages} /> 
+                <Wiadomosci messages={user.messages} dataRefresh={this.dataRefresh} /> 
               }/>
 
 					  	<Route path="/login" render={ () => 
