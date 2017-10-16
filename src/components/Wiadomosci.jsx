@@ -1,4 +1,4 @@
-import {getProfile, deleteMsg} from '../authorize';
+import {getProfile, deleteMsg, setReadMsg} from '../authorize';
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Dialog from 'material-ui/Dialog';
@@ -60,15 +60,32 @@ export default class Wiadomosci extends Component {
 
   handleOpen = ( message ) => {
     console.log('target: ',message);     
-
+    
     this.setState({ 
       editWindowOpen: true,
       editWindowMsg: message,
     }); 
+
+    //set message as read
+    let token = localStorage.getItem('id_token') || '';
+    let userId = localStorage.getItem('userId') || '';
+    //this.setState({loading:true});
+    setReadMsg(message._id, userId , token)
+    .then( result => {
+      console.log(result);
+      //this.setState({ editWindowOpen: false, loading:false });
+      
+    })
+    .catch( err => {
+      console.log(err);
+      this.setState({ errorMessage:err.message, loading:false });
+    })
+
   };
 
   handleClose = () => {
     this.setState({ editWindowOpen: false});
+    this.props.dataRefresh();
   };
 
   // handleRefresh(event) {

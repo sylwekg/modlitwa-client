@@ -15,6 +15,7 @@ const MessagesList = props => {
   if(results.length) {
     messagesList=results.map( msg => {
       //date converter
+      //msg.date="2016-10-14T16:49:54.099Z";  //for testing past year date 
       let displayT, displayD, displayY;
       if(msg.date) {
         let currentYear = new Date().getFullYear();
@@ -27,6 +28,7 @@ const MessagesList = props => {
           displayD = moment(msg.date).format("DD-MMM");
           displayT = moment(msg.date).format("HH:mm");  
         }
+        //console.log(displayY,'-', displayD,'-', displayT);
       } 
       else {
         displayT="12:00";
@@ -42,9 +44,13 @@ const MessagesList = props => {
             onClick={ (event) => {props.onClick( msg ); } }
             rightAvatar={
               <Avatar 
-              size={50} 
-              style={{color: 'lightBlack', fontSize:'12px', background:'transparent'}} 
-              >{displayY &&<br/>}{displayD}<br/>{displayT}</Avatar>
+                size={50} 
+                style={{ display: 'block', textAlign: 'center', color: 'lightBlack', 
+                  fontSize:'12px', background:'transparent'}} 
+                >
+                {displayY} {displayY &&  <br/>}{displayD} {displayT && <br/>} {displayT}<br/>
+                {!msg.read&&<span style={{color: 'red', fontSize: '20px'}} > &#9679;</span>}
+              </Avatar>
             }
             //rightAvatar={<DateDisplay className="dateDisplay" date={msg.date}/>}
           />

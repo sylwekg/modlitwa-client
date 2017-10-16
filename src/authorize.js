@@ -173,3 +173,32 @@ export function deleteMsg( msgId, userId, token ) {
 			})
 	});
 }
+
+export function setReadMsg( msgId, userId, token ) {
+	let config = {
+	    method: 'POST',
+	    headers: { 
+	    	'Content-Type':'application/x-www-form-urlencoded', 
+	     	'Authorization': 'Bearer '+ token 
+	    },
+	    body: `msgId=${msgId}&userId=${userId}`
+	}
+	return new Promise((resolve, reject) => {
+		fetch(baseURL+'/api/protected/messages/setRead', config)
+		  .then(response => response.json()
+		  	.then(user => ({ user, response }))
+		  ).then(({ user, response }) =>  {
+		    if (!response.ok) {
+		      // If there was a problem
+		      reject(user)
+		    }
+		    else {
+		      // If delete was successful, return reslut
+		      resolve(user)
+		    }
+		}).catch(err => { 
+			console.log("delete Error: ", err);
+			reject(translate(err));
+			})
+	});
+}
