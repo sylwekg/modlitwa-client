@@ -19,7 +19,8 @@ const baseURL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
 export default class Grupa extends Component {
 	static propTypes: {
 	    groupId: PropTypes.object,
-	    errorMessage: PropTypes.string,
+		errorMessage: PropTypes.string,
+		dataRefresh: PropTypes.func.isRequired,
 	};
 
     constructor(props) {
@@ -27,10 +28,10 @@ export default class Grupa extends Component {
 	    this.state = { 
 	    	errorMessage: '',
 	    	loading: false,
-	    	name : "group doesn't exist",
+	    	name : "group not found",
 	    	imageUrl: '',
 	    	opiekun : { 
-	    		name: 'opiekun is not assigned',
+	    		name: 'opiekun not found',
 	    		tel: 'N/A',
 	    		foto: 'avatar.jpg',
 	    		},
@@ -59,7 +60,9 @@ export default class Grupa extends Component {
 					loading: false,
 				 	errorMessage: err.message
 				 });
-				//console.log('Grupa >>>',err);
+				console.log('Grupa >>>',err);
+				if(err.status===401) 
+					this.props.dataRefresh();
 			});
   		}
   	}

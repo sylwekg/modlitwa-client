@@ -4,15 +4,23 @@ export function translate(errMsg) {
 	const transList = [
 	  {
 	    server: "Failed to fetch",
-	    client: "Server not responding",
-	  },
-	];
+	    client: "Server is not responding",
+		},
+	  {
+	    server: "Unauthorized",
+	    client: "Please login",
+		},
 
-	let result=errMsg;  
+		
+	];
+//	console.log('translate Input =>',errMsg);
+	let result;  
 	transList.forEach( (item, index) => {
 		//console.log('comparing ',errMsg.message,' with ',item.server);
-		if(!errMsg.message.localeCompare(item.server)) 
-			result.message = item.client;	
+		if(!errMsg.message.localeCompare(item.server)) {
+			result=Object.assign({},errMsg, { message: item.client })
+			//console.log('translate Out =>',result);
+		}
 	}); 
 	return result;
 }
@@ -31,7 +39,7 @@ export function login(email, password) {
 		  ).then(({ user, response }) =>  {
 		    if (!response.ok) {
 		      // If there was a problem
-		      reject(user)
+					reject(translate({message: response.statusText, status: response.status}));
 		    }
 		    else {
 		      // If login was successful, set the token in local storage
@@ -63,7 +71,7 @@ export function getProfile(userId, token) {
 		  ).then(({ user, response }) =>  {
 		    if (!response.ok) {
 		      // If there was a problem
-		      reject(user)
+					reject(translate({message: response.statusText, status: response.status}));
 		    }
 		    else {
 		      // If login was successful, set the token in local storage
@@ -100,7 +108,7 @@ export function updateProfile( name, email, tel, imageUrl, token, userId) {
 		    if (!response.ok) {
 		      // If there was a problem
 		      console.log('error on save attempt');
-		      reject(user)
+					reject(translate({message: response.statusText, status: response.status}));
 		    }
 		    else {
 		      // If login was successful, set the token in local storage
@@ -131,8 +139,9 @@ export function getGroupData(groupId, token) {
 		    .then(data => ({ data, response }))
 		  ).then(({ data, response }) =>  {
 		    if (!response.ok) {
-		      // If there was a problem
-		      reject(data)
+					// If there was a problem
+					console.log(response);
+		      reject(translate({message: response.statusText, status: response.status}));
 		    }
 		    else {
 		      // If respons was successful
@@ -161,7 +170,7 @@ export function deleteMsg( msgId, userId, token ) {
 		  ).then(({ user, response }) =>  {
 		    if (!response.ok) {
 		      // If there was a problem
-		      reject(user)
+					reject(translate({message: response.statusText, status: response.status}));
 		    }
 		    else {
 		      // If delete was successful, return reslut
@@ -190,7 +199,7 @@ export function setReadMsg( msgId, userId, token ) {
 		  ).then(({ user, response }) =>  {
 		    if (!response.ok) {
 		      // If there was a problem
-		      reject(user)
+					reject(translate({message: response.statusText, status: response.status}));
 		    }
 		    else {
 		      // If delete was successful, return reslut

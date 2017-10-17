@@ -26,7 +26,7 @@ var styles = {
 
 class TabsMenu extends Component {
   componentWillUpdate() {
-    console.log("messsagecount: ", this.props.messageCount);
+    //console.log("messsagecount: ", this.props.messageCount);
   };
   
   render() {

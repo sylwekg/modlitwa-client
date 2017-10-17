@@ -116,40 +116,40 @@ export default class App extends Component {
 		<MuiThemeProvider >
 			<BrowserRouter>	 
 			  	<div>
-				  	<Route 
-              path="/" 
-              render={ () => <HeaderWithRouter 
-			  	isAuthorized={isAuthorized}  
-				onLogout={this.onLogout}
-				messageCount={this.state.messageCount}
-				 /> }  
-              />
+					<Route 
+						path="/" 
+						render={ () => <HeaderWithRouter 
+							isAuthorized={isAuthorized}  
+							onLogout={this.onLogout}
+							messageCount={this.state.messageCount}
+							/> }  
+						/>
 				  	<ProgressIndicator showProg={loading} />
 				  	<Switch>
 					  	<Route exact path="/" render={ () => <Home  /> }/>
 
 					  	<PrivateRoute path="/grupa" isAuthorized={isAuthorized} component={ () => 
-                <Grupa groupId={ user.grupa ? user.grupa._id : null} errorMessage={errorMessage} /> 
-              }/>
-{/*					  	<Route path="/grupa" render= { () => (isAuthorized) ? ( <Grupa /> ) : 
-					  		(<Login onLogin={this.loginUser} onLoading={this.onLoading}/>) } />       */}
+                			<Grupa groupId={ user.grupa ? user.grupa._id : null} errorMessage={errorMessage} 
+							dataRefresh={this.dataRefresh} /> 
+              				}/>
+							  
 					  	<PrivateRoute path="/modlitwa" isAuthorized={isAuthorized} component={ () => 
-                <Modlitwa /> 
-              }/>
+                			<Modlitwa /> 
+              			}/>
 
 					  	<PrivateRoute path="/profil" isAuthorized={isAuthorized} component={ () =>
-					  		<Profil user={user} onUserUpdate={this.onUserUpdate} />
+					  		<Profil user={user} onUserUpdate={this.onUserUpdate} dataRefresh={this.dataRefresh} />
 					  	}/>
 					  				
 					  	<PrivateRoute path="/wiadomosci" isAuthorized={isAuthorized} component={ () => 
-                <Wiadomosci messages={user.messages} 
-					dataRefresh={this.dataRefresh} 
-					/> 
-              }/>
+                			<Wiadomosci messages={user.messages} 
+								dataRefresh={this.dataRefresh} 
+							/> 
+              			}/>
 
 					  	<Route path="/login" render={ () => 
-                <LoginWR isAuthorized={isAuthorized} onLogin={this.loginUser} errorMessage={errorMessage}  />
-              } />
+                			<LoginWR isAuthorized={isAuthorized} onLogin={this.loginUser} errorMessage={errorMessage}  />
+              			} />
 
 					  	<Route path="/about" render={ () => <About title="about ..."/> } />  
 

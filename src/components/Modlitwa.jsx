@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-
+import {Card, CardTitle, CardMedia} from 'material-ui/Card';
 
 export default class  Modlitwa extends Component {
 
@@ -7,17 +7,19 @@ export default class  Modlitwa extends Component {
 	}
 
 	render() {
+		
 		return (
-		  <div className="container" >
-		    <h2>Modlitwa </h2>
-
-		    
-		    <p>Modlitwa Modlitwa Modlitwa  Modlitwa  Modlitwa  Modlitwa  Modlitwa  Modlitwa </p>
-		    <br /> <br /><br /><br /><br />
+			<div className="container">
 
 
-		    <p>Modlitwa Modlitwa Modlitwa  Modlitwa  Modlitwa  Modlitwa  Modlitwa  Modlitwa </p>
-		  </div>
+				{/* --------------grup data------------------*/}
+		    <Card className="center">
+		    <span> (page under constructon) </span>
+		
+				</Card>
+
+		    </div>	
 		);
 	}
+
 }

@@ -53,6 +53,8 @@ export default class Wiadomosci extends Component {
         .catch( err => {
           console.log(err);
           this.setState({ errorMessage:err.message, loading:false });
+          if(err.status===401 ) 
+					  this.props.dataRefresh();
         })
       });
     } 
@@ -79,6 +81,8 @@ export default class Wiadomosci extends Component {
     .catch( err => {
       console.log(err);
       this.setState({ errorMessage:err.message, loading:false });
+      if(err.status===401) 
+        this.props.dataRefresh();
     })
 
   };
@@ -113,6 +117,8 @@ export default class Wiadomosci extends Component {
     .catch( err => {
       console.log(err);
       this.setState({ errorMessage:err.message, loading:false });
+      if(err.status===401) 
+        this.props.dataRefresh();
     })
   };
 

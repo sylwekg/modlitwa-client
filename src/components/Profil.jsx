@@ -54,7 +54,8 @@ const styles = {
 export default class Profil extends Component {
 	static propTypes: {
 	    user: PropTypes.object.isRequired,
-	    onUserUpdate: React.PropTypes.func.isRequired,
+			onUserUpdate: React.PropTypes.func.isRequired,
+			dataRefresh: PropTypes.func.isRequired,
 	};
 
     constructor(props) {
@@ -97,13 +98,13 @@ export default class Profil extends Component {
 	};
 
 	handleSave = () => {
-	    if(!this.state.emailErrorText && !this.state.nameErrorText && !this.state.telErrorText ) {
+		if(!this.state.emailErrorText && !this.state.nameErrorText && !this.state.telErrorText ) {
 			const {name, email, tel, imageCropUrl} = this.state;
 			this.setState({ loading: true });
 			let token = localStorage.getItem('id_token') || '';
-	  		let userId = localStorage.getItem('userId') || '';
+			let userId = localStorage.getItem('userId') || '';
 
-		    updateProfile(name, email, tel, imageCropUrl, token, userId)
+			updateProfile(name, email, tel, imageCropUrl, token, userId)
 			.then(resp => {
 				console.log('user data updated successfully:',resp);
 				this.setState({	
@@ -117,9 +118,11 @@ export default class Profil extends Component {
 				this.setState({
 					errorMessage: err.message,
 					loading: false,
-				})
+				});
+				if(err.status===401) 
+					this.props.dataRefresh();
 			});  	
-	    }
+		}
 	};
 
   	onEmailChange = (event) => {

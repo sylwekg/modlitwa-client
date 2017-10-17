@@ -78,12 +78,7 @@
     margin: auto;
 }
 
-.errorMessage {
-    padding: 1px;
-    background-color: crimson;	
-    text-align: center;
-    color: white;
-}
+
 
 /* The close button */
 .closebtn {
@@ -251,6 +246,15 @@ body {
 	    font-family: 'Roboto', sans-serif;
 
 	}
+	.errorMessage {
+		padding: 1px;
+		background-color: crimson;	
+		text-align: center;
+		color: white;
+		position: fixed;
+		width: 100%;
+		z-index: 1000;
+	}
 }
 
 @media (min-width: 769px) {
@@ -304,5 +308,14 @@ body {
 	    color: white;
 	    font-family: 'Roboto', sans-serif;
 
+	}
+	.errorMessage {
+		padding: 1px;
+		background-color: crimson;	
+		text-align: center;
+		color: white;
+		position: fixed;
+		width: 20rem;
+		z-index: 1000;
 	}
 }

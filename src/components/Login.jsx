@@ -94,8 +94,6 @@ export default class Login extends Component {
 
 	render() {
 	    const { errorMessage, redirectPath, loading } = this.state
-	    console.log('login render');
-
 	    if ( this.props.isAuthorized) {
 	      return (
 	        <Redirect to={redirectPath}/>
@@ -105,11 +103,12 @@ export default class Login extends Component {
 		return (
 		  <form className="container" onSubmit={this.submit.bind(this)}>
 		  	<ProgressIndicator showProg={loading} />
+				
 		    <Card className="center">
-
+					<ErrorMessage msg={errorMessage} />
 		    	<CardTitle title="Login"  />
 
-		    	<ErrorMessage msg={errorMessage} />
+		    	
 
 			    <TextField
 			      id="email"

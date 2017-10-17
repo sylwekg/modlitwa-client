@@ -60,7 +60,7 @@ const MessagesList = props => {
     });
   } 
   else {
-    messagesList= <p> no messages </p> 
+    messagesList= <p style={{ textAlign: 'center' }} > no messages found </p> 
   }
 
   return(
