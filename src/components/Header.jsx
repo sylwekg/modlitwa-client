@@ -11,7 +11,6 @@ import Message from 'material-ui/svg-icons/communication/message';
 import Person from 'material-ui/svg-icons/social/person';
 //import ActionHome from 'material-ui/svg-icons/action/home';
 
-
 var MediaQuery = require('react-responsive');
 
 var styles = {
@@ -26,6 +25,10 @@ var styles = {
 
 
 class TabsMenu extends Component {
+  componentWillUpdate() {
+    console.log("messsagecount: ", this.props.messageCount);
+  };
+  
   render() {
     return(
       <Tabs className={this.props.styl}  initialSelectedIndex={-1}>
@@ -46,20 +49,29 @@ class TabsMenu extends Component {
         />
         <Tab
           icon={<Message />}
-          label="Msg"
+          label= {
+          <span> Msg
+            {this.props.messageCount ?
+            <span 
+              style={{fontSize: '12px', borderRadius: '50%', position:'absolute'  , top: '20px',
+              display: 'flex', left: '60%', placeContent: 'center', alignItems: 'center',
+              backgroundColor: 'white', color: 'black', width: '24px', height:'24px'}}>
+              {this.props.messageCount}
+            </span> : <span/> }
+          </span>}  
           containerElement={<NavLink to="/wiadomosci" />}
-        />
+        />       
       </Tabs>
     )
   }
 };
-
 
 class Header extends Component { 
   static propTypes: {
       isAuthorized: PropTypes.bool.isRequired,
       onLogout: PropTypes.func.isRequired,
       history: PropTypes.object.isRequired,
+      messageCount: PropTypes.number,
   };
   
   handleTouchTap = () => {
@@ -88,7 +100,7 @@ class Header extends Component {
             >
 
             {isAuthorized &&
-              <TabsMenu styl="menuHD"  />
+              <TabsMenu styl="menuHD" messageCount={this.props.messageCount} />
             }
 
             <div className="right">
@@ -143,7 +155,7 @@ class Header extends Component {
             className="menu"
             >
             {isAuthorized &&
-              <TabsMenu styl="tab"  />
+              <TabsMenu styl="tab" messageCount={this.props.messageCount}  />
             }
           </AppBar> 
         </MediaQuery>

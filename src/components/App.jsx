@@ -33,12 +33,12 @@ export default class App extends Component {
 	constructor() {
 	    super();
 	    this.state = {
-	    	  access_token :"",
+	    	access_token :"",
 	      	user:{},
 	      	loading: false,
 	      	isAuthorized: false,
-          errorMessage: '',
-	    	};
+          	errorMessage: '',
+	    };
   	};
 
   	componentWillMount() {
@@ -65,11 +65,17 @@ export default class App extends Component {
 	}
 
   	loginUser = (user, token) => {
+		  // counting messages
+		  let newMsgCount=0;
+		  user.messages.forEach((msg, index) => {
+			if(!msg.read) newMsgCount++;
+		  });
   		  this.setState({
           	access_token: token,
           	loading: false,
           	isAuthorized: true,
-          	user: user,
+			user: user,
+			messageCount: newMsgCount,
         });
   	};
 
@@ -79,7 +85,7 @@ export default class App extends Component {
 	      	user:{},
 	      	loading: false,
 	      	isAuthorized: false,
-          errorMessage: err,
+          	errorMessage: err,
   		});
   		localStorage.removeItem('id_token');
   		localStorage.removeItem('userId');
@@ -112,7 +118,11 @@ export default class App extends Component {
 			  	<div>
 				  	<Route 
               path="/" 
-              render={ () => <HeaderWithRouter isAuthorized={isAuthorized}  onLogout={this.onLogout} /> }  
+              render={ () => <HeaderWithRouter 
+			  	isAuthorized={isAuthorized}  
+				onLogout={this.onLogout}
+				messageCount={this.state.messageCount}
+				 /> }  
               />
 				  	<ProgressIndicator showProg={loading} />
 				  	<Switch>
@@ -131,9 +141,10 @@ export default class App extends Component {
 					  		<Profil user={user} onUserUpdate={this.onUserUpdate} />
 					  	}/>
 					  				
-
 					  	<PrivateRoute path="/wiadomosci" isAuthorized={isAuthorized} component={ () => 
-                <Wiadomosci messages={user.messages} dataRefresh={this.dataRefresh} /> 
+                <Wiadomosci messages={user.messages} 
+					dataRefresh={this.dataRefresh} 
+					/> 
               }/>
 
 					  	<Route path="/login" render={ () => 

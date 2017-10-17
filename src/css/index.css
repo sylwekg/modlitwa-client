@@ -3,6 +3,11 @@
 }*/
 
 /*login icon styling*/
+
+.msgCorrection {
+	color: red;
+}
+
 .right {
     float: right;
     height: 0px;
