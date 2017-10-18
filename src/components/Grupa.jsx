@@ -65,14 +65,19 @@ export default class Grupa extends Component {
 					this.props.dataRefresh();
 			});
   		}
-  	}
+	  }
+	  
+	onErrorAck = () => {
+		console.log('errr ack');
+		this.setState({errorMessage:''});
+	};
 
 	render() {
 		const { name, imageUrl, opiekun, users, errorMessage, loading} = this.state
 		return (
 			<div className="container">
 				<ProgressIndicator showProg={loading} />
-				<ErrorMessage msg={errorMessage} />
+				<ErrorMessage msg={errorMessage} ack={this.onErrorAck} />
 
 				{/* --------------grup data------------------*/}
 		    	<Card className="center">

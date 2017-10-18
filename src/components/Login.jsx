@@ -22,14 +22,20 @@ export default class Login extends Component {
 	    super(props)
 	    this.state = { 
 	    	loading: false,
-	    	emailErrorText: '', 
+				emailErrorText: '', 
+				//errorActive: false,
 	    	passwordErrorText: '',
 	    	email: '',
 	    	password: '', 
 	    	redirectPath: this.props.history.location.state ? this.props.history.location.state.from.pathname : '/',
 	    	errorMessage: this.props.errorMessage,//? this.props.errorMessage : '',
 	    }
-    }
+		}
+		
+		onErrorAck = () => {
+			console.log('errr ack');
+			this.setState({errorMessage:''});
+		};
 
   	onChangeEmail(event) {
   		this.setState({errorMessage:''});
@@ -105,7 +111,7 @@ export default class Login extends Component {
 		  	<ProgressIndicator showProg={loading} />
 				
 		    <Card className="center">
-					<ErrorMessage msg={errorMessage} />
+					<ErrorMessage msg={errorMessage} ack={this.onErrorAck} />
 		    	<CardTitle title="Login"  />
 
 		    	

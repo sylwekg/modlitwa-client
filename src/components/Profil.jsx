@@ -211,7 +211,12 @@ export default class Profil extends Component {
   			imageCropUrl: '',
   			editFotoMode:false,
   		})
-  	};
+	  };
+	  
+	onErrorAck = () => {
+		console.log('errr ack');
+		this.setState({errorMessage:''});
+	};
 
 	render() {
 		const { user } = this.props
@@ -260,7 +265,7 @@ export default class Profil extends Component {
 					 	/>
 
 					 	<div className="errorMessageEditWindow" >
-					 		<ErrorMessage msg={this.state.errorMessage} />
+					 		<ErrorMessage msg={this.state.errorMessage} ack={this.onErrorAck} />
 					 	</div>
 					 	
 					 	<div className="containerModal">

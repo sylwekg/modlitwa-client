@@ -122,12 +122,17 @@ export default class Wiadomosci extends Component {
     })
   };
 
+  onErrorAck = () => {
+    console.log('errr ack');
+    this.setState({errorMessage:''});
+  };
+
   render() {
     const { loading, errorMessage, messages, editWindowOpen, editWindowMsg} = this.state
     return (
       <div className="container">
         <ProgressIndicator showProg={loading} />
-        <ErrorMessage msg={errorMessage} />     
+        <ErrorMessage msg={errorMessage} ack={this.onErrorAck} />     
         <Card className="center">
 
           <ReactPullToRefresh
