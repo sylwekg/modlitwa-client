@@ -14,11 +14,11 @@ export function translate(errMsg) {
 		
 	];
 //	console.log('translate Input =>',errMsg);
-	let result;  
+	let result=Object.assign({},errMsg);  
 	transList.forEach( (item, index) => {
 		//console.log('comparing ',errMsg.message,' with ',item.server);
 		if(!errMsg.message.localeCompare(item.server)) {
-			result=Object.assign({},errMsg, { message: item.client })
+			result=Object.assign({},result, { message: item.client })
 			//console.log('translate Out =>',result);
 		}
 	}); 
@@ -39,7 +39,10 @@ export function login(email, password) {
 		  ).then(({ user, response }) =>  {
 		    if (!response.ok) {
 		      // If there was a problem
-					reject(translate({message: response.statusText, status: response.status}));
+					if(user.message)
+						reject(translate({message: user.message, status: response.status}));
+					else
+						reject(translate({message: response.statusText, status: response.status}));
 		    }
 		    else {
 		      // If login was successful, set the token in local storage
@@ -47,8 +50,11 @@ export function login(email, password) {
 		    }
 		}).catch(err => { 
 			console.log("Login Error: ", err);
-			reject(translate(err));
-			})
+			if(err.message)
+				reject(translate({message: err.message}));
+			else
+				reject(translate({message: err}));
+			});
 	});
 }
 
@@ -71,7 +77,10 @@ export function getProfile(userId, token) {
 		  ).then(({ user, response }) =>  {
 		    if (!response.ok) {
 		      // If there was a problem
-					reject(translate({message: response.statusText, status: response.status}));
+					if(user.message)
+						reject(translate({message: user.message, status: response.status}));
+					else
+						reject(translate({message: response.statusText, status: response.status}));
 		    }
 		    else {
 		      // If login was successful, set the token in local storage
@@ -79,17 +88,21 @@ export function getProfile(userId, token) {
 		    }
 		}).catch(err => { 
 			console.log("Login Error: ", err);
-			reject(translate(err));
-		 })
+			if(err.message)
+				reject(translate({message: err.message}));
+			else
+				reject(translate({message: err}));
+			});
 	});
 }
 
-export function updateProfile( name, email, tel, imageUrl, token, userId) {
+export function updateProfile( name, email, tel, imageUrl,file, token, userId) {
 	var data = new FormData();
 	data.append("name",name);
 	data.append("email",email);
 	data.append("tel",tel);
 	data.append("imageUrl",imageUrl);
+	data.append("file",file);
 
 	let config = {
 	    method: 'POST',
@@ -106,9 +119,13 @@ export function updateProfile( name, email, tel, imageUrl, token, userId) {
 		    .then(user => ({ user, response }))
 		  ).then(({ user, response }) =>  {
 		    if (!response.ok) {
-		      // If there was a problem
-		      console.log('error on save attempt');
-					reject(translate({message: response.statusText, status: response.status}));
+					// If there was a problem
+					console.log('Authorize response:',response);
+					console.log('error on save attempt');
+					if(user.message)
+						reject(translate({message: user.message, status: response.status}));
+					else
+						reject(translate({message: response.statusText, status: response.status}));
 		    }
 		    else {
 		      // If login was successful, set the token in local storage
@@ -116,8 +133,11 @@ export function updateProfile( name, email, tel, imageUrl, token, userId) {
 		    }
 		}).catch(err => {
 			console.log("Upload Error: ", err);
-			reject(translate(err));
-		})
+			if(err.message)
+				reject(translate({message: err.message}));
+			else
+				reject(translate({message: err}));
+			});
 	});
 }
 
@@ -141,7 +161,10 @@ export function getGroupData(groupId, token) {
 		    if (!response.ok) {
 					// If there was a problem
 					console.log(response);
-		      reject(translate({message: response.statusText, status: response.status}));
+					if(data.message)
+						reject(translate({message: data.message, status: response.status}));
+					else
+						reject(translate({message: response.statusText, status: response.status}));
 		    }
 		    else {
 		      // If respons was successful
@@ -149,8 +172,11 @@ export function getGroupData(groupId, token) {
 		    }
 		}).catch(err => { 
 			console.log("Login Error: ", err);
-			reject(translate(err));
-		 })
+			if(err.message)
+				reject(translate({message: err.message}));
+			else
+				reject(translate({message: err}));
+		});
 	});
 }
 
@@ -170,7 +196,10 @@ export function deleteMsg( msgId, userId, token ) {
 		  ).then(({ user, response }) =>  {
 		    if (!response.ok) {
 		      // If there was a problem
-					reject(translate({message: response.statusText, status: response.status}));
+					if(user.message)
+						reject(translate({message: user.message, status: response.status}));
+					else
+						reject(translate({message: response.statusText, status: response.status}));
 		    }
 		    else {
 		      // If delete was successful, return reslut
@@ -178,8 +207,11 @@ export function deleteMsg( msgId, userId, token ) {
 		    }
 		}).catch(err => { 
 			console.log("delete Error: ", err);
-			reject(translate(err));
-			})
+			if(err.message)
+				reject(translate({message: err.message}));
+			else
+				reject(translate({message: err}));
+			});
 	});
 }
 
@@ -199,7 +231,10 @@ export function setReadMsg( msgId, userId, token ) {
 		  ).then(({ user, response }) =>  {
 		    if (!response.ok) {
 		      // If there was a problem
-					reject(translate({message: response.statusText, status: response.status}));
+					if(user.message)
+						reject(translate({message: user.message, status: response.status}));
+					else
+						reject(translate({message: response.statusText, status: response.status}));
 		    }
 		    else {
 		      // If delete was successful, return reslut
@@ -207,7 +242,10 @@ export function setReadMsg( msgId, userId, token ) {
 		    }
 		}).catch(err => { 
 			console.log("delete Error: ", err);
-			reject(translate(err));
-			})
+			if(err.message)
+				reject(translate({message: err.message}));
+			else
+				reject(translate({message: err}));
+			});
 	});
 }

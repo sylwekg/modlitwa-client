@@ -99,12 +99,12 @@ export default class Profil extends Component {
 
 	handleSave = () => {
 		if(!this.state.emailErrorText && !this.state.nameErrorText && !this.state.telErrorText ) {
-			const {name, email, tel, imageCropUrl} = this.state;
+			const {name, email, tel, imageCropUrl, file} = this.state;
 			this.setState({ loading: true });
 			let token = localStorage.getItem('id_token') || '';
 			let userId = localStorage.getItem('userId') || '';
 
-			updateProfile(name, email, tel, imageCropUrl, token, userId)
+			updateProfile(name, email, tel, imageCropUrl,file, token, userId)
 			.then(resp => {
 				console.log('user data updated successfully:',resp);
 				this.setState({	

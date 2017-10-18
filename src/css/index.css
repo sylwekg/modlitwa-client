@@ -281,7 +281,7 @@ body {
 		padding-right: 12px; 
 	    padding-left: 12px; 
 	    padding-top: 90px;
-	    max-width: 20rem;
+	    max-width: 40rem;
 	    margin: auto;
 	}
 
@@ -315,7 +315,7 @@ body {
 		text-align: center;
 		color: white;
 		position: fixed;
-		width: 20rem;
+		width: 40rem;
 		z-index: 1000;
 	}
 }
