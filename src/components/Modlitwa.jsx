@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Card, CardTitle, CardMedia} from 'material-ui/Card';
+import {Card} from 'material-ui/Card';
 
 export default class  Modlitwa extends Component {
 

@@ -12,7 +12,7 @@ import ProgressIndicator from './ProgressIndicator';
 import {Card, CardHeader } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar';
 import moment from 'moment';
-import ReactPullToRefresh from 'react-pull-to-refresh';
+//import ReactPullToRefresh from 'react-pull-to-refresh';
 
 const baseURL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
 
@@ -28,7 +28,7 @@ export default class Wiadomosci extends Component {
     this.state = { 
       errorMessage: this.props.errorMessage,
       loading: false,
-      messages: [],
+      messages: this.props.messages,
       editWindowOpen: false,
       editWindowMsg: {},
     }
@@ -38,24 +38,32 @@ export default class Wiadomosci extends Component {
     var token = localStorage.getItem('id_token') || '';
     var results = this.props.messages;
     var messages = [];
+    let promises = [];
 
     if(results.length > 0) {
     // compilowanie danych
       results.forEach( (message, index) => {
         this.setState({loading:true});
-        getProfile(message.from, token)
-        .then( data => { 
-          messages.push(Object.assign({}, message, {from: data.user }));
-          if ( index === results.length-1 ) {
-            this.setState({ messages: messages, loading: false });
-          }
-        })       
-        .catch( err => {
-          console.log(err);
-          this.setState({ errorMessage:err.message, loading:false });
-          if(err.status===401 ) 
-					  this.props.dataRefresh();
-        })
+        promises.push( 
+          getProfile(message.from, token)
+          .then( data => { 
+            messages.push(Object.assign({}, message, {from: data.user }));
+            this.setState({ 
+              messages: messages, 
+              loading: false });
+          })       
+          .catch( err => {
+            console.log(err);
+            this.setState({ errorMessage: err.message, loading:false });
+            if(err.status===401 ) 
+              this.props.dataRefresh();
+          })
+        )
+      });
+      Promise.all(promises)
+      .then( () => { 
+        console.log('msg data loaded'); 
+        this.render();
       });
     } 
   };
@@ -129,19 +137,20 @@ export default class Wiadomosci extends Component {
 
   render() {
     const { loading, errorMessage, messages, editWindowOpen, editWindowMsg} = this.state
+    console.log('render');
     return (
       <div className="container">
         <ProgressIndicator showProg={loading} />
         <ErrorMessage msg={errorMessage} ack={this.onErrorAck} />     
         <Card className="center">
-
-          <ReactPullToRefresh
+          <MessagesList messages={messages} onClick={this.handleOpen} 
+          //onDrag={this.handleRefresh}
+            />
+          {/* <ReactPullToRefresh
             onRefresh={this.handlePullRefresh}
             >
-            <MessagesList messages={messages} onClick={this.handleOpen} 
-            //onDrag={this.handleRefresh}
-             />
-          </ReactPullToRefresh>
+
+          </ReactPullToRefresh> */}
 
           {/* Show full message modal window */}
           <Dialog

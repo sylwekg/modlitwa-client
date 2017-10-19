@@ -34,17 +34,17 @@ class TabsMenu extends Component {
       <Tabs className={this.props.styl}  initialSelectedIndex={-1}>
         <Tab
           icon={<Face />}
-          label="Profil"
+          label="Profile"
           containerElement={<NavLink to="/profil" />}
           />
         <Tab
           icon={<Favorite />}
-          label="Modlitwa"
+          label="Prayer"
           containerElement={<NavLink to="/modlitwa" />}
         />
         <Tab
           icon={<People />}
-          label="Grupa"
+          label="Group"
           containerElement={<NavLink to="/grupa" />}
         />
         <Tab
@@ -54,8 +54,9 @@ class TabsMenu extends Component {
             {this.props.messageCount ?
             <span 
               style={{fontSize: '12px', borderRadius: '50%', position:'absolute'  , top: '20px',
-              display: 'flex', left: '60%', placeContent: 'center', alignItems: 'center',
-              backgroundColor: 'white', color: 'black', width: '24px', height:'24px'}}>
+              display: 'grid', textAlign: 'center', left: '60%', placeContent: 'center', alignItems: 'center',
+              backgroundColor: 'white', color: 'black', 
+              paddingLeft: '6px', paddingRight: '6px', paddingTop: '3px', paddingBottom: '3px'}}>
               {this.props.messageCount}
             </span> : <span/> }
           </span>}  

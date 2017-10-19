@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {List, ListItem} from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
-import {darkBlack, lightBlack} from 'material-ui/styles/colors';
+//import {darkBlack, lightBlack} from 'material-ui/styles/colors';
 import Divider from 'material-ui/Divider';
 import moment from 'moment';
 

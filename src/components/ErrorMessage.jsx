@@ -7,22 +7,10 @@ export default class  ErrorMessage extends Component {
 			ack: PropTypes.func.isRequired, 
 	};
 
-	constructor(props) {
-		super(props)
-		this.state = { 
-		errorConfirmed: false,
-		}
-	};
-
-	componentWillMount() {
-		console.log('error update.');
-		this.setState({ errorConfirmed:false });
-	};
-
 	render() {
 		return (
 		  <div>
-	    	{this.props.msg.length>0 && //!this.state.errorConfirmed &&
+	    	{this.props.msg.length>0 && 
 	    	<div className="errorMessage">
 	    		<span className="closebtn" onClick={this.props.ack} > &times; </span>
 	    		<p style={{'marginLeft': '15px'}}> {this.props.msg} </p>
