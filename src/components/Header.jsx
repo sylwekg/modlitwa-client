@@ -10,6 +10,7 @@ import Face from 'material-ui/svg-icons/action/face';
 import Message from 'material-ui/svg-icons/communication/message';
 import Person from 'material-ui/svg-icons/social/person';
 //import ActionHome from 'material-ui/svg-icons/action/home';
+import {pinkA200} from 'material-ui/styles/colors';
 
 var MediaQuery = require('react-responsive');
 
@@ -55,7 +56,7 @@ class TabsMenu extends Component {
             <span 
               style={{fontSize: '12px', borderRadius: '50%', position:'absolute'  , top: '20px',
               display: 'grid', textAlign: 'center', left: '60%', placeContent: 'center', alignItems: 'center',
-              backgroundColor: 'white', color: 'black', 
+              backgroundColor: pinkA200, color: 'black', 
               paddingLeft: '6px', paddingRight: '6px', paddingTop: '3px', paddingBottom: '3px'}}>
               {this.props.messageCount}
             </span> : <span/> }
@@ -108,7 +109,7 @@ class Header extends Component {
               {!isAuthorized &&
                 <Tab 
                   icon={<Person />}
-                  label="Login"
+                  //label="Login"
                   containerElement={<NavLink to="/login" />}
                   />
               }
@@ -137,7 +138,7 @@ class Header extends Component {
                 {!isAuthorized &&
                   <Tab 
                     icon={<Person />}
-                    label="Login"
+                    //label="Login"
                     containerElement={<NavLink to="/login" />}
                     />
                 }

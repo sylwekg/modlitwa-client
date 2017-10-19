@@ -37,17 +37,23 @@ export default class Wiadomosci extends Component {
   componentWillMount() {
     var token = localStorage.getItem('id_token') || '';
     var results = this.props.messages;
-    var messages = [];
+    var messages = this.props.messages;
+    function SortByDate(a, b){
+      var aName = a.date;
+      var bName = b.date;
+      return ((aName > bName) ? -1 : ((aName < bName) ? 1 : 0));
+    }
+    results.sort(SortByDate);
     let promises = [];
 
-    if(results.length > 0) {
+    if( (results.length > 0) && (typeof results[0].from._id) === 'undefined' ) {
     // compilowanie danych
       results.forEach( (message, index) => {
         this.setState({loading:true});
         promises.push( 
           getProfile(message.from, token)
           .then( data => { 
-            messages.push(Object.assign({}, message, {from: data.user }));
+            messages[index]=Object.assign({}, message, {from: data.user });
             this.setState({ 
               messages: messages, 
               loading: false });
@@ -141,7 +147,7 @@ export default class Wiadomosci extends Component {
     return (
       <div className="container">
         <ProgressIndicator showProg={loading} />
-        <ErrorMessage msg={errorMessage} ack={this.onErrorAck} />     
+        <ErrorMessage className="errorMessage" msg={errorMessage} ack={this.onErrorAck} />     
         <Card className="center">
           <MessagesList messages={messages} onClick={this.handleOpen} 
           //onDrag={this.handleRefresh}
@@ -173,9 +179,8 @@ export default class Wiadomosci extends Component {
               onRightIconButtonTouchTap={this.handleDelete}
             />
 
-            <div className="errorMessageEditWindow" >
-              <ErrorMessage msg={errorMessage} />
-            </div>
+            <ErrorMessage className="errorMessageEditWindow" msg={errorMessage} ack={this.onErrorAck} />
+            
 
             {editWindowOpen &&
             <div >               

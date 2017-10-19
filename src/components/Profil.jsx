@@ -94,7 +94,10 @@ export default class Profil extends Component {
 	};
 
 	handleClose = () => {
-	   this.setState({editWindowOpen: false});
+	   this.setState({
+		   editWindowOpen: false, 
+			errorMessage: '',
+		});
 	};
 
 	handleSave = () => {
@@ -209,7 +212,7 @@ export default class Profil extends Component {
   		this.setState({
   			imagePreviewUrl: baseURL+"/api/avatars/"+this.props.user.foto,
   			imageCropUrl: '',
-  			editFotoMode:false,
+			editFotoMode:false,
   		})
 	  };
 	  
@@ -224,6 +227,7 @@ export default class Profil extends Component {
 		return (
 			<div className="container">
 				<ProgressIndicator showProg={this.state.loading} />
+				<ErrorMessage className="errorMessage" msg={this.state.errorMessage} ack={this.onErrorAck} />
 		    	<Card className="center">
 		    	
 				    <CardMedia overlay={<CardTitle title={user.name}  />} >
@@ -255,18 +259,20 @@ export default class Profil extends Component {
 				      paperClassName="global--modal-paper"							
 			        >
 			        	<AppBar
-					    title={<span >Edit Profile</span>}
-					    style={styles.appBar}
-					    //onTitleTouchTap={handleTouchTap}
-					    iconElementLeft={<IconButton><NavigationClose /></IconButton>}
-					    iconElementRight={<FlatButton label="Save" />}
-					    onLeftIconButtonTouchTap={this.handleClose}
-					    onRightIconButtonTouchTap={this.handleSave}
+							title={<span >Edit Profile</span>}
+							style={styles.appBar}
+							//onTitleTouchTap={handleTouchTap}
+							iconElementLeft={<IconButton><NavigationClose /></IconButton>}
+							iconElementRight={<FlatButton label="Save" />}
+							onLeftIconButtonTouchTap={this.handleClose}
+							onRightIconButtonTouchTap={this.handleSave}
 					 	/>
 
-					 	<div className="errorMessageEditWindow" >
-					 		<ErrorMessage msg={this.state.errorMessage} ack={this.onErrorAck} />
-					 	</div>
+					 	<ErrorMessage 
+						 	className="errorMessageEditWindow" 
+							 msg={this.state.errorMessage} 
+							 ack={this.onErrorAck} 
+						/>
 					 	
 					 	<div className="containerModal">
 				        	{!this.state.editFotoMode &&

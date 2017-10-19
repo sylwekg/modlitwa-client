@@ -98,11 +98,6 @@
     color: black;
 }
 
-.errorMessageEditWindow {
-    margin-top: 65px;
-
-}
-
 
 html {
   font-family: 'Roboto', sans-serif !important;
@@ -255,6 +250,10 @@ body {
 		width: 100%;
 		z-index: 1000;
 	}
+	.errorMessageEditWindow {
+		margin-top: 65px;
+	
+	}
 }
 
 @media (min-width: 769px) {
@@ -317,5 +316,15 @@ body {
 		position: fixed;
 		width: 40rem;
 		z-index: 1000;
+	}
+	.errorMessageEditWindow {
+		padding: 1px;
+		background-color: crimson;	
+		text-align: center;
+		color: white;
+		position: fixed;
+		z-index: 1000;
+		margin-top: 65px;
+		width: 100%;
 	}
 }

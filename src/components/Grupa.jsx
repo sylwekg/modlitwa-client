@@ -77,8 +77,9 @@ export default class Grupa extends Component {
 		return (
 			<div className="container">
 				<ProgressIndicator showProg={loading} />
-				<ErrorMessage msg={errorMessage} ack={this.onErrorAck} />
-
+				
+				<ErrorMessage className="errorMessage" msg={errorMessage} ack={this.onErrorAck} />
+				
 				{/* --------------grup data------------------*/}
 		    	<Card className="center">
 		    	

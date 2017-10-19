@@ -111,7 +111,9 @@ export default class Login extends Component {
 		  	<ProgressIndicator showProg={loading} />
 				
 		    <Card className="center">
-					<ErrorMessage msg={errorMessage} ack={this.onErrorAck} />
+				
+					<ErrorMessage className="errorMessage" msg={errorMessage} ack={this.onErrorAck} />
+			
 		    	<CardTitle title="Login"  />
 
 		    	

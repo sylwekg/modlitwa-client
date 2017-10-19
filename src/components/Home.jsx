@@ -24,10 +24,10 @@ class Home extends Component {
         </div>
         <div className="productArgument">
           <div className="row productArgument">
-            <div className="column productArgument" style={{'backgroundColor':'rgb(93, 188, 213)'}}>
+            <div className="column productArgument" style={{'backgroundColor':'rgb(93, 188, 213)', color:'white'}}>
               <p  style={{'fontSize':'200%'}} > Stay connected </p>
               <p>This application is dedicated for each person who would like 
-                to be part of modlitwaonline.pl community. It allows to edit profile data get updates on current
+                to be part of modlitwaonline.pl community. It allows to edit profile data, get updates on current
                 assignments and receive message notifications.</p>
             </div>
             <div className="column productArgument" >
