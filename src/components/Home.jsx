@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 //import {Link} from 'react-router-dom';
 import RaisedButton from 'material-ui/RaisedButton';
+import home1 from '../images/home1.jpg';
 
 class Home extends Component {    
 
@@ -23,26 +24,31 @@ class Home extends Component {
           </div>
         </div>
         <div className="productArgument">
-          <div className="row productArgument">
-            <div className="column productArgument" style={{'backgroundColor':'rgb(93, 188, 213)', color:'white'}}>
-              <p  style={{'fontSize':'200%'}} > Stay connected </p>
-              <p>This application is dedicated for each person who would like 
+          <div className="row">
+            <div className="column" >
+              <p style={{'fontSize':'200%', padding:'8%'}} > Stay connected </p>
+              <p style={{paddingRight: '8%', paddingLeft: '8%',lineHeight: '1.7', textAlign:'justify' }} >
+                This web application is dedicated for each person who would like 
                 to be part of modlitwaonline.pl community. It allows to edit profile data, get updates on current
-                assignments and receive message notifications.</p>
+                assignments, receive message notifications. Other functions are coming ...</p>
             </div>
-            <div className="column productArgument" >
-              <p style={{'fontSize':'200%'}} >Column 2</p>
-              <p>Some text..</p>
+            <div className="column" >
+              <p style={{'fontSize':'200%'}} > </p>
+              <img src={home1} alt='app example' width='100%'/>
+              <p></p>
             </div>
-            {/* <div className="column productArgument" style={{'backgroundColor':'#ccc'}}>
+            {/* <div className="column" style={{'backgroundColor':'#ccc'}}>
               <p style={{'fontSize':'200%'}} > Otrzymuj powiadomienia</p>
               <p>Some text..</p>
             </div>
-            <div className="column productArgument" >
+            <div className="column" >
               <p style={{'fontSize':'200%'}} > Column 4</p>
               <p>Some text..</p>
             </div> */}
           </div>
+        </div>
+        <div className="footer" >
+            <p> ModlitwaOnline.pl  </p>
         </div>
       </div>
     );
