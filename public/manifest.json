@@ -1,7 +1,12 @@
 {
-  "short_name": "Modlitwa Pomaga",
-  "name": "ModlitwaPomaga.pl",
+  "short_name": "Modlitwa Online",
+  "name": "ModlitwaOnline.pl",
   "icons": [
+    {
+      "src": "/images/rosary-favicon-128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
     {
       "src": "/images/rosary-favicon.png",
       "sizes": "192x192",
@@ -9,6 +14,8 @@
     }
   ],
   "start_url": "/",
+  "background_color": "#00bcd4",  
   "display": "standalone",
-  "orientation": "portrait"
+  "orientation": "portrait",
+  "theme_color": "#00bcd4"
 }
