@@ -83,7 +83,7 @@ export default class Profil extends Component {
   	};
 
   	componentWillUpdate() {
-  		console.log('profile render');
+  		//console.log('profile render');
   	}
 
 	handleOpen = () => {
@@ -109,7 +109,7 @@ export default class Profil extends Component {
 
 			updateProfile(name, email, tel, imageCropUrl,file, token, userId)
 			.then(resp => {
-				console.log('user data updated successfully:',resp);
+				//console.log('user data updated successfully:',resp);
 				this.setState({	
 					editWindowOpen: false,
 					loading: false,
@@ -117,7 +117,7 @@ export default class Profil extends Component {
 				this.props.onUserUpdate();
 			})
 			.catch(err => {
-				console.log(err);
+				//console.log(err);
 				this.setState({
 					errorMessage: err.message,
 					loading: false,
@@ -166,7 +166,7 @@ export default class Profil extends Component {
 
 
  	onImageChange = (event) => {
- 		console.log('on image change triggered');
+ 		//console.log('on image change triggered');
  		event.preventDefault();
  		let reader = new FileReader();
     	let file = event.target.files[0];
@@ -217,7 +217,7 @@ export default class Profil extends Component {
 	  };
 	  
 	onErrorAck = () => {
-		console.log('errr ack');
+		//console.log('errr ack');
 		this.setState({errorMessage:''});
 	};
 

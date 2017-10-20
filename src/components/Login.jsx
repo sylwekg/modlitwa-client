@@ -33,7 +33,7 @@ export default class Login extends Component {
 		}
 		
 		onErrorAck = () => {
-			console.log('errr ack');
+			//console.log('errr ack');
 			this.setState({errorMessage:''});
 		};
 
@@ -88,7 +88,7 @@ export default class Login extends Component {
 			    this.props.onLogin(user.user, user.access_token);
 	    	})
 	    	.catch( err => {
-	    		console.log('component:',err);
+	    		//console.log('component:',err);
 	    		this.setState({
 	    			errorMessage:err.message,
 	    			loading: false,
@@ -149,13 +149,21 @@ export default class Login extends Component {
     			<CardText> Not registered yet? Register now</CardText>
     			<CardActions>
 			      <RaisedButton 
-			      	href="/" 
+			      	href="/admin/users/register" 
 			      	label="Register" 
+			      	primary={true}  
+			      	fullWidth={true} 
+			      	/>		
+    			</CardActions>
+    			<br />
+					<CardActions>
+			      <RaisedButton 
+			      	href="/admin/users/login" 
+			      	label="Admin" 
 			      	primary={true}  
 			      	fullWidth={true} 
 			      	/>
     			</CardActions>
-    			<br />
 			</Card>
 		  </form>
 		);

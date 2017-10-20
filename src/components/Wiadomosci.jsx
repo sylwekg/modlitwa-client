@@ -59,7 +59,7 @@ export default class Wiadomosci extends Component {
               loading: false });
           })       
           .catch( err => {
-            console.log(err);
+            //console.log(err);
             this.setState({ errorMessage: err.message, loading:false });
             if(err.status===401 ) 
               this.props.dataRefresh();
@@ -68,14 +68,14 @@ export default class Wiadomosci extends Component {
       });
       Promise.all(promises)
       .then( () => { 
-        console.log('msg data loaded'); 
+        //console.log('msg data loaded'); 
         this.render();
       });
     } 
   };
 
   handleOpen = ( message ) => {
-    console.log('target: ',message);     
+    //console.log('target: ',message);     
     
     this.setState({ 
       editWindowOpen: true,
@@ -88,12 +88,12 @@ export default class Wiadomosci extends Component {
     //this.setState({loading:true});
     setReadMsg(message._id, userId , token)
     .then( result => {
-      console.log(result);
+      //console.log(result);
       //this.setState({ editWindowOpen: false, loading:false });
       
     })
     .catch( err => {
-      console.log(err);
+      //console.log(err);
       this.setState({ errorMessage:err.message, loading:false });
       if(err.status===401) 
         this.props.dataRefresh();
@@ -108,7 +108,7 @@ export default class Wiadomosci extends Component {
 
   // handleRefresh(event) {
   //   event.preventDefault();
-  //   console.log('handle refresh');
+  //   //console.log('handle refresh');
   //   this.props.dataRefresh();
   // };
 
@@ -117,19 +117,19 @@ export default class Wiadomosci extends Component {
   }
 
   handleDelete = () => {
-    console.log('zostanie skasowana: ',this.state.editWindowMsg._id);
+    //console.log('zostanie skasowana: ',this.state.editWindowMsg._id);
     //kasowanie wiadomosci
     let token = localStorage.getItem('id_token') || '';
     let userId = localStorage.getItem('userId') || '';
     this.setState({loading:true});
     deleteMsg(this.state.editWindowMsg._id, userId , token)
     .then( result => {
-      console.log(result);
+      //console.log(result);
       this.setState({ editWindowOpen: false, loading:false });
       this.props.dataRefresh();
     })
     .catch( err => {
-      console.log(err);
+      //console.log(err);
       this.setState({ errorMessage:err.message, loading:false });
       if(err.status===401) 
         this.props.dataRefresh();
@@ -137,13 +137,13 @@ export default class Wiadomosci extends Component {
   };
 
   onErrorAck = () => {
-    console.log('errr ack');
+    //console.log('errr ack');
     this.setState({errorMessage:''});
   };
 
   render() {
     const { loading, errorMessage, messages, editWindowOpen, editWindowMsg} = this.state
-    console.log('render');
+    //console.log('render');
     return (
       <div className="container">
         <ProgressIndicator showProg={loading} />

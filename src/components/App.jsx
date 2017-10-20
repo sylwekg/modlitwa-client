@@ -1,5 +1,6 @@
 import {getProfile} from '../authorize';
 import React, { Component } from 'react';
+//import {Link} from 'react-router-dom';
 import {
 	BrowserRouter,
 	Route,
@@ -43,11 +44,11 @@ export default class App extends Component {
 
   	componentWillMount() {
 		this.dataRefresh();
-  		console.log('componentWillMount');
+  		//console.log('componentWillMount');
 	};
 	
 	dataRefresh = () => {
-		console.log('data refresh request');
+		//console.log('data refresh request');
 		let token = localStorage.getItem('id_token') || '';
 		let userId = localStorage.getItem('userId') || '';
 		if(token && userId) {
@@ -55,10 +56,10 @@ export default class App extends Component {
 			getProfile(userId, token)
 				.then(user => {
 					this.loginUser(user.user, token);
-					console.log('user data received:',user);
+					//console.log('user data received:',user);
 				})
 				.catch(err => {
-					console.log(err);
+					//console.log(err);
 					this.onLogout(err.message);
 				});
 		} 
@@ -99,11 +100,11 @@ export default class App extends Component {
   			getProfile(userId, token)
   				.then(user => {
   					this.loginUser(user.user, token);
-  					console.log('user data received:',user);
+  					//console.log('user data received:',user);
   					//this.props.history.push('/');
   				})
   				.catch(err => {
-  					console.log(err);
+  					//console.log(err);
   					this.onLogout(err.message);
   				});
   		}
@@ -116,6 +117,12 @@ export default class App extends Component {
 		<MuiThemeProvider >
 			<BrowserRouter>	 
 			  	<div>
+				  	<Route exact path="/admin/users/register" 
+					  	component={() => window.location = 'http://modlitwaonline.pl/admin/users/register'} />
+					
+					<Route exact path="/admin/users/login" 
+						component={() => window.location = 'http://modlitwaonline.pl/admin/users/login'} />
+
 					<Route 
 						path="/" 
 						render={ () => <HeaderWithRouter 
@@ -127,6 +134,8 @@ export default class App extends Component {
 				  	<ProgressIndicator showProg={loading} />
 				  	<Switch>
 					  	<Route exact path="/" render={ () => <Home  /> }/>
+
+
 
 					  	<PrivateRoute path="/grupa" isAuthorized={isAuthorized} component={ () => 
                 			<Grupa groupId={ user.grupa ? user.grupa._id : null} errorMessage={errorMessage} 

@@ -47,7 +47,7 @@ export default class Grupa extends Component {
   			getGroupData(this.props.groupId, token)
 	  		.then( data => {
 				this.setState({ loading: false });
-	  			//console.log(data);
+	  			////console.log(data);
 	  			this.setState({
 	  				name: data.group.name,
 	  				imageUrl: baseURL+"/api/avatars/"+ data.group.foto,
@@ -60,7 +60,7 @@ export default class Grupa extends Component {
 					loading: false,
 				 	errorMessage: err.message
 				 });
-				console.log('Grupa >>>',err);
+				//console.log('Grupa >>>',err);
 				if(err.status===401) 
 					this.props.dataRefresh();
 			});
@@ -68,7 +68,7 @@ export default class Grupa extends Component {
 	  }
 	  
 	onErrorAck = () => {
-		console.log('errr ack');
+		//console.log('errr ack');
 		this.setState({errorMessage:''});
 	};
 
