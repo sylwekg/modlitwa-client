@@ -271,7 +271,13 @@ body {
 	}
 	.errorMessageEditWindow {
 		margin-top: 65px;
-	
+		padding: 1px;
+		background-color: crimson;	
+		text-align: center;
+		color: white;
+		position: fixed;
+		width: 100%;
+		z-index: 1000;
 	}
 }
 
