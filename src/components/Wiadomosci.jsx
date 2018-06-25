@@ -17,12 +17,6 @@ import moment from 'moment';
 const baseURL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
 
 export default class Wiadomosci extends Component {
-  static propTypes: {
-      messages: PropTypes.array,
-      errorMessage: PropTypes.string,
-      dataRefresh: PropTypes.func, 
-  };
-
   constructor(props) {
     super(props)
     this.state = { 
@@ -173,10 +167,10 @@ export default class Wiadomosci extends Component {
             <AppBar 
               style={{position: "fixed"}}
               title={<span >Show msg</span>}
-              iconElementLeft={<IconButton><NavigationClose /></IconButton>}
-              iconElementRight={<FlatButton label="Delete" />}
-              onLeftIconButtonTouchTap={this.handleClose}
-              onRightIconButtonTouchTap={this.handleDelete}
+              iconElementLeft={<IconButton onClick={this.handleClose} ><NavigationClose /></IconButton>}
+              iconElementRight={<FlatButton onClick={this.handleDelete} label="Delete" />}
+              // onLeftIconButtonTouchTap={this.handleClose}
+              // onRightIconButtonTouchTap={this.handleDelete}
             />
 
             <ErrorMessage className="errorMessageEditWindow" msg={errorMessage} ack={this.onErrorAck} />
@@ -199,5 +193,9 @@ export default class Wiadomosci extends Component {
     );
   }
 }
-
- //             
+Wiadomosci.propTypes= {
+  messages: PropTypes.array,
+  errorMessage: PropTypes.string,
+  dataRefresh: PropTypes.func, 
+};
+          

@@ -6,7 +6,9 @@
     "react-scripts": "1.0.6"
   },
   "dependencies": {
+    "material-ui": "^0.20.1",
     "moment": "^2.19.1",
+    "prop-types": "^15.6.2",
     "react": "^15.5.4",
     "react-avatar-editor": "^10.2.1",
     "react-dom": "^15.5.4",

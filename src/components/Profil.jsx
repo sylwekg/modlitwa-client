@@ -1,8 +1,8 @@
 import {updateProfile} from '../authorize';
 import ErrorMessage from './ErrorMessage';
 import ProgressIndicator from './ProgressIndicator';
-
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {Card, CardTitle, CardMedia} from 'material-ui/Card';
 import AvatarEditor from 'react-avatar-editor'
 //icons
@@ -52,12 +52,6 @@ const styles = {
 };
 
 export default class Profil extends Component {
-	static propTypes: {
-	    user: PropTypes.object.isRequired,
-			onUserUpdate: React.PropTypes.func.isRequired,
-			dataRefresh: PropTypes.func.isRequired,
-	};
-
     constructor(props) {
 	    super(props)
 	    this.state = { 
@@ -262,10 +256,10 @@ export default class Profil extends Component {
 							title={<span >Edit Profile</span>}
 							style={styles.appBar}
 							//onTitleTouchTap={handleTouchTap}
-							iconElementLeft={<IconButton><NavigationClose /></IconButton>}
-							iconElementRight={<FlatButton label="Save" />}
-							onLeftIconButtonTouchTap={this.handleClose}
-							onRightIconButtonTouchTap={this.handleSave}
+							iconElementLeft={<IconButton onClick={this.handleClose} ><NavigationClose /></IconButton>}
+							iconElementRight={<FlatButton onClick={this.handleSave} label="Save" />}
+							// onLeftIconButtonTouchTap={this.handleClose}
+							// onRightIconButtonTouchTap={this.handleSave}
 					 	/>
 
 					 	<ErrorMessage 
@@ -435,3 +429,9 @@ export default class Profil extends Component {
 		);
 	}
 }
+
+Profil.propTypes= {
+	user: PropTypes.object.isRequired,
+	onUserUpdate: PropTypes.func.isRequired,
+	dataRefresh: PropTypes.func.isRequired,
+};

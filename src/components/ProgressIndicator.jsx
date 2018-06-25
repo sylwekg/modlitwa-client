@@ -1,12 +1,9 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+
 import CircularProgress from 'material-ui/CircularProgress';
 
 export default class  ProgressIndicator extends Component {
-	static propTypes: {
-	    showProg: PropTypes.bool.isRequired,
-	};
-
-
 	render() {
 		return (
 			<div>
@@ -21,4 +18,8 @@ export default class  ProgressIndicator extends Component {
 
 ProgressIndicator.defaultProps = {
   showProg: false
+};
+
+ProgressIndicator.propTypes= {
+	showProg: PropTypes.bool.isRequired,
 };

@@ -1,7 +1,6 @@
 import React , { Component } from 'react';
 import {NavLink} from 'react-router-dom';
 import PropTypes from 'prop-types';
-
 import AppBar from 'material-ui/AppBar';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import People from 'material-ui/svg-icons/social/people';
@@ -69,13 +68,6 @@ class TabsMenu extends Component {
 };
 
 class Header extends Component { 
-  static propTypes: {
-      isAuthorized: PropTypes.bool.isRequired,
-      onLogout: PropTypes.func.isRequired,
-      history: PropTypes.object.isRequired,
-      messageCount: PropTypes.number,
-  };
-  
   handleTouchTap = () => {
     this.props.history.push("/");
   };
@@ -92,10 +84,10 @@ class Header extends Component {
       <header>
         <MediaQuery query='(min-width: 769px)'>
           <AppBar 
-            title={<span className="title">ModlitwaOnline.pl</span>} 
+            title={<span onClick={this.handleTouchTap} className="title">ModlitwaOnline.pl</span>} 
             style={styles.appBar} 
             //showMenuIconButton={false}
-            onTitleTouchTap={this.handleTouchTap}
+            // onTitleTouchTap={this.handleTouchTap}
             // iconElementRight={<span className="menuHD"><FlatButton label="Save" /> </span>}
             //iconElementRight={<IconButton tooltip="Login"> <Person /> </IconButton>}
             className="menu"
@@ -129,10 +121,10 @@ class Header extends Component {
 
         <MediaQuery query='(max-width: 768px)'>
           <AppBar 
-            title={<span className="title">ModlitwaOnline.pl</span>} 
+            title={<span onClick={this.handleTouchTap} className="title">ModlitwaOnline.pl</span>} 
             style={styles.appBar} 
             //showMenuIconButton={false}
-            onTitleTouchTap={this.handleTouchTap}
+            // onTitleTouchTap={this.handleTouchTap}
             iconElementRight={
               <div className="right">
                 {!isAuthorized &&
@@ -166,5 +158,12 @@ class Header extends Component {
     );
   }
 }
+
+Header.propTypes= {
+  isAuthorized: PropTypes.bool.isRequired,
+  onLogout: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
+  messageCount: PropTypes.number,
+};
 
 export default Header;

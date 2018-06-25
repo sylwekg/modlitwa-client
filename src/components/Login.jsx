@@ -111,13 +111,8 @@ export default class Login extends Component {
 		  	<ProgressIndicator showProg={loading} />
 				
 		    <Card className="center">
-				
 					<ErrorMessage className="errorMessage" msg={errorMessage} ack={this.onErrorAck} />
-			
 		    	<CardTitle title="Login"  />
-
-		    	
-
 			    <TextField
 			      id="email"
 			      name="email"
@@ -135,6 +130,7 @@ export default class Login extends Component {
 			      type="password"
 			      onChange={this.onChangePassword.bind(this)}
 			    /><br />
+					<p>email: demo@demo.pl  <br/>   password:demo</p>
 			    <CardActions>
 			      <RaisedButton 
 			      	label="Submit" 
@@ -149,16 +145,19 @@ export default class Login extends Component {
     			<CardText> Not registered yet? Register now</CardText>
     			<CardActions>
 			      <RaisedButton 
-			      	href="/admin/users/register" 
+			      	href="https://webdev-194116.appspot.com/admin/users/register" 
 			      	label="Register" 
 			      	primary={true}  
 			      	fullWidth={true} 
+							rel="external"
+							//onClick={() => this.props.history.replace("http://www.wp.pl")}
 			      	/>		
     			</CardActions>
     			<br />
 					<CardActions>
 			      <RaisedButton 
-			      	href="/admin/users/login" 
+			      	href="https://webdev-194116.appspot.com/admin/users/login" 
+							rel="external"
 			      	label="Admin" 
 			      	primary={true}  
 			      	fullWidth={true} 

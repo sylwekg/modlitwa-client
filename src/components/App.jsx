@@ -117,11 +117,11 @@ export default class App extends Component {
 		<MuiThemeProvider >
 			<BrowserRouter>	 
 			  	<div>
-				  	<Route exact path="/admin/users/register" 
-					  	component={() => window.location = 'http://modlitwaonline.pl/admin/users/register'} />
+				  	{/* <Route exact path="/admin/users/register" 
+					  	component={() => window.location = 'https://webdev-194116.appspot.com/admin/users/register'} />
 					
 					<Route exact path="/admin/users/login" 
-						component={() => window.location = 'http://modlitwaonline.pl/admin/users/login'} />
+						component={() => window.location = 'https://webdev-194116.appspot.com/admin/users/login'} /> */}
 
 					<Route 
 						path="/" 

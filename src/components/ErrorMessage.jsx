@@ -1,13 +1,8 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 
 export default class  ErrorMessage extends Component {
-	static propTypes: {
-			msg: PropTypes.string,
-			ack: PropTypes.func.isRequired, 
-			className: PropTypes.string,
-	};
-
 	render() {
 		return (
 		  <div>
@@ -24,4 +19,9 @@ export default class  ErrorMessage extends Component {
 
 ErrorMessage.defaultProps = {
   msg: ''
+};
+ErrorMessage.propTypes= {
+	msg: PropTypes.string,
+	ack: PropTypes.func.isRequired, 
+	className: PropTypes.string,
 };

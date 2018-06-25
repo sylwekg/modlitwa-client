@@ -3,6 +3,7 @@ import ErrorMessage from './ErrorMessage';
 import ProgressIndicator from './ProgressIndicator';
 import UsersList from './UsersList';
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {Card, CardTitle, CardMedia} from 'material-ui/Card';
 
 //icons
@@ -17,12 +18,6 @@ import ActionGrade from 'material-ui/svg-icons/action/grade';
 const baseURL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
 
 export default class Grupa extends Component {
-	static propTypes: {
-	    groupId: PropTypes.object,
-		errorMessage: PropTypes.string,
-		dataRefresh: PropTypes.func.isRequired,
-	};
-
     constructor(props) {
 	    super(props)
 	    this.state = { 
@@ -117,4 +112,10 @@ export default class Grupa extends Component {
 
 Grupa.defaultProps = {
   groupId: null
+};
+
+Grupa.propTypes={
+	groupId: PropTypes.string,
+	errorMessage: PropTypes.string,
+	dataRefresh: PropTypes.func.isRequired,
 };
